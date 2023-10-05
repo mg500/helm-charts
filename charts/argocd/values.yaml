@@ -1,6 +1,6 @@
-crds:
-  install: false
 argo-cd:
+  crds:
+    install: false
   dex:
     enabled: false
   server:
