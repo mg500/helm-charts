@@ -1,2 +1,4 @@
 whoami:
-  enabled: true
+  replicaCount: 2
+  ingress:
+    enabled: false
