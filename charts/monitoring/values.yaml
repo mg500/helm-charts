@@ -9,7 +9,7 @@ kube-prometheus-stack:
     enabled: true
     defaultDashboardsEnabled: true
     defaultDashboardsTimezone: Europe/Berlin
-    adminPassword: prom-operator
+    adminPassword: admin
     ingress:
       enabled: false
     sidecar:
