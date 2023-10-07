@@ -14,6 +14,22 @@ kube-prometheus-stack:
       enabled: false
     sidecar:
       dashboards:
+        enabled: true
+        label: grafana_dashboard
+        labelValue: "1"
+        # Allow discovery in all namespaces for dashboards
+        searchNamespace: ALL
+
+        ## Annotations for Grafana dashboard configmaps
+        ##
+        annotations: {}
+        multicluster:
+          global:
+            enabled: false
+          etcd:
+            enabled: false
+        provider:
+          allowUiUpdates: false
 
   prometheusOperator:
     enabled: true
