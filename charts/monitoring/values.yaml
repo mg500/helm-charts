@@ -17,7 +17,7 @@ kube-prometheus-stack:
         enabled: true
         label: grafana_dashboard
         labelValue: "1"
-        #searchNamespace: monitoring
+        searchNamespace: monitoring
         provider:
           allowUiUpdates: true
 
