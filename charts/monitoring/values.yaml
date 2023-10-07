@@ -19,7 +19,7 @@ kube-prometheus-stack:
         labelValue: "1"
         searchNamespace: monitoring
         provider:
-          allowUiUpdates: true
+          allowUiUpdates: false
 
   prometheusOperator:
     enabled: true
