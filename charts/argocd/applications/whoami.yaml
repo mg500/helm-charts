@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: whoami
+  namespace: argocd
+spec:
+  sourceNamespaces:
+  - whoami
+  sourceRepos:
+    - 'https://github.com/mg500/helm-charts'
+  destinations:
+    - namespace: 'whoami'
+      server: '*'
+  clusterResourceBlacklist:
+    - group: '*'
+      kind: '*'
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: whoami
+  namespace: argocd
+spec:
+  destination:
+    namespace: whoami
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: charts/whoami
+    repoURL: 'https://github.com/mg500/helm-charts'
+    targetRevision: main
+    helm:
+      releaseName: whoami
+      valueFiles:
+        - values.yaml
+  project: whoami
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    #syncOptions:
+      #- CreateNamespace=true
+      #- ApplyOutOfSyncOnly=true

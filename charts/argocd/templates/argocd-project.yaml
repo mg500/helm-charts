@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  sourceRepos:
+    #- 'https://github.com/mg500/argocd'
+    - '*'
+  destinations:
+    - namespace: 'argocd'
+      server: '*'
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+#   orphanedResources:
+#     warn: false
