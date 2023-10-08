@@ -9,9 +9,9 @@ spec:
   destinations:
     - namespace: 'nana'
       server: '*'
-  clusterResourceBlacklist:
+  clusterResourceWhitelist:
     - group: '*'
-      kind: '*'
+      kind: 'Namespace'
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application

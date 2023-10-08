@@ -12,6 +12,8 @@ spec:
     - namespace: 'kube-system'
       server: '*'
   clusterResourceWhitelist:
+    - group: '*'
+      kind: 'Namespace'
     - group: 'rbac.authorization.k8s.io'
       kind: 'ClusterRole'
     - group: 'rbac.authorization.k8s.io'
