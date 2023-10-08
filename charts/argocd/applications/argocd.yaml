@@ -1,3 +1,5 @@
+# https://github.com/argoproj/argo-cd/issues/7860
+
 # apiVersion: argoproj.io/v1alpha1
 # kind: Application
 # metadata:
