@@ -11,9 +11,9 @@ spec:
   destinations:
     - namespace: 'whoami'
       server: '*'
-  clusterResourceBlacklist:
+  clusterResourceWhitelist:
     - group: '*'
-      kind: '*'
+      kind: 'Namespace'
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -37,6 +37,6 @@ spec:
     automated:
       prune: true
       selfHeal: true
-    #syncOptions:
-      #- CreateNamespace=true
+    syncOptions:
+      - CreateNamespace=true
       #- ApplyOutOfSyncOnly=true
