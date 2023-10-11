@@ -32,6 +32,11 @@ kube-prometheus-stack:
         static_configs:
         - targets: ['10.10.10.100:10120']
 
+      additionalScrapeConfigsSecret: 
+        enabled: true
+        name: additional-scrape-configs
+        key: prometheus-additional.yaml
+
   thanosRuler:
     enabled: false
 
