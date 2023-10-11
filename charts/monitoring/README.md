@@ -1,7 +1,7 @@
 # Monitoring
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
-helm install -f values.yaml --create-namespace -n monitoring monitoring .
+helm dep update
 helm upgrade --install monitoring --values values.yaml --create-namespace -n monitoring .
 helm uninstall monitoring --namespace monitoring
 kubectl delete namespace monitoring

@@ -26,6 +26,11 @@ kube-prometheus-stack:
 
   prometheus:
     enabled: true
+    prometheusSpec:
+      additionalScrapeConfigs:
+      - job_name: 'fritzbox_exporter_fd'
+        static_configs:
+        - targets: ['10.10.10.100:10120']
 
   thanosRuler:
     enabled: false
