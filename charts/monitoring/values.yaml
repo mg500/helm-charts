@@ -81,7 +81,7 @@ kube-prometheus-stack:
 
   prometheus:
     enabled: true
-    prometheusSpec:
+    # prometheusSpec:
       # serviceMonitorSelectorNilUsesHelmValues: false
       # ## Namespaces to be selected for ServiceMonitor discovery.
       # ##
