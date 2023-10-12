@@ -63,10 +63,39 @@ kube-prometheus-stack:
 
   prometheusOperator:
     enabled: true
+    # namespaces: {}
+    # # releaseNamespace: true
+    # # additional:
+    # # - kube-system
+
+    # ## Namespaces not to scope the interaction of the Prometheus Operator (deny list).
+    # ##
+    # denyNamespaces: []
+
+    # ## Filter namespaces to look for prometheus-operator custom resources
+    # ##
+    # alertmanagerInstanceNamespaces: []
+    # alertmanagerConfigNamespaces: []
+    # prometheusInstanceNamespaces: []
+    # thanosRulerInstanceNamespaces: []
 
   prometheus:
     enabled: true
-    # prometheusSpec:
+    prometheusSpec:
+      # serviceMonitorSelectorNilUsesHelmValues: false
+      # ## Namespaces to be selected for ServiceMonitor discovery.
+      # ##
+      # serviceMonitorNamespaceSelector: {}
+      # ## Example which selects ServiceMonitors in namespaces with label "prometheus" set to "somelabel"
+      # # serviceMonitorNamespaceSelector:
+      # #   matchLabels:
+      # #     prometheus: somelabel
+      # serviceMonitorNamespaceSelector:
+      #   matchLabels:
+      #     argocd: "true"
+      serviceMonitorNamespaceSelector: {}
+
+
       # additionalScrapeConfigs:
     #   - job_name: 'fritzbox_exporter_fd'
     #     static_configs:
