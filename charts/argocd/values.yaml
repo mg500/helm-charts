@@ -18,7 +18,7 @@ argo-cd:
         metricRelabelings: []
         # -- Prometheus ServiceMonitor selector
         selector:
-          prometheus: active
+          release: monitoring
           # prometheus: kube-prometheus
 
         # -- Prometheus ServiceMonitor scheme
@@ -63,7 +63,7 @@ argo-cd:
         namespace: "" # "monitoring"
         # -- Prometheus ServiceMonitor labels
         additionalLabels:
-          prometheus: active
+          release: monitoring
         annotations: {}
 
   repoServer:
