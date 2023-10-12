@@ -93,8 +93,9 @@ kube-prometheus-stack:
       # serviceMonitorNamespaceSelector:
       #   matchLabels:
       #     argocd: "true"
-      serviceMonitorNamespaceSelector: {}
-
+      serviceMonitorNamespaceSelector:
+        matchLabels:
+          prometheus: somelabel
 
       # additionalScrapeConfigs:
     #   - job_name: 'fritzbox_exporter_fd'
