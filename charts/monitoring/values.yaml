@@ -1,4 +1,3 @@
-
 # alerting:
 #   # -- Name of the alert channel as it is defined in the alertforwardings-domain-deployment. The default value is based on `grafanaProvisioningHelpers.domain`.
 #   channel: ""
@@ -11,31 +10,6 @@
 #   # -- Where to read dashboard JSONs from
 #   paths:
 #   - "dashboards"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 kube-prometheus-stack:
@@ -86,7 +60,7 @@ kube-prometheus-stack:
       ## prometheus resource to be created with selectors based on values in the helm deployment,
       ## which will also match the servicemonitors created
       ##
-      serviceMonitorSelectorNilUsesHelmValues: true
+      serviceMonitorSelectorNilUsesHelmValues: false
 
       ## ServiceMonitors to be selected for target discovery.
       ## If {}, select all ServiceMonitors
