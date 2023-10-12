@@ -17,7 +17,8 @@ argo-cd:
         # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
         metricRelabelings: []
         # -- Prometheus ServiceMonitor selector
-        selector: {}
+        selector:
+          prometheus: active
           # prometheus: kube-prometheus
 
         # -- Prometheus ServiceMonitor scheme
@@ -61,8 +62,8 @@ argo-cd:
         # -- Prometheus ServiceMonitor namespace
         namespace: "" # "monitoring"
         # -- Prometheus ServiceMonitor labels
-        additionalLabels: {}
-        # -- Prometheus ServiceMonitor annotations
+        additionalLabels:
+          prometheus: active
         annotations: {}
 
   repoServer:
