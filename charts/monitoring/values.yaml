@@ -99,10 +99,10 @@ kube-prometheus-stack:
       #     prometheus: somelabel
 
 
-      # additionalScrapeConfigs:
-    #   - job_name: 'fritzbox_exporter_fd'
-    #     static_configs:
-    #     - targets: ['10.10.10.100:10120']
+      additionalScrapeConfigs:
+      - job_name: 'fritzbox_exporter_fd'
+        static_configs:
+        - targets: ['10.10.10.100:10120']
 
     #   additionalScrapeConfigsSecret: 
     #     enabled: true
