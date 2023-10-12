@@ -81,7 +81,7 @@ kube-prometheus-stack:
 
   prometheus:
     enabled: true
-    # prometheusSpec:
+    prometheusSpec:
       # serviceMonitorSelectorNilUsesHelmValues: false
       # ## Namespaces to be selected for ServiceMonitor discovery.
       # ##
@@ -94,9 +94,9 @@ kube-prometheus-stack:
       #   matchLabels:
       #     argocd: "true"
 
-      # serviceMonitorNamespaceSelector:
-      #   matchLabels:
-      #     prometheus: somelabel
+      serviceMonitorNamespaceSelector: {}
+        # matchLabels:
+        #   prometheus: somelabel
 
       # additionalScrapeConfigs:
     #   - job_name: 'fritzbox_exporter_fd'
