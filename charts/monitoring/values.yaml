@@ -69,8 +69,8 @@ kube-prometheus-stack:
       # serviceMonitorSelector: {}
       serviceMonitorSelector:
         matchLabels:
-          release: monitoring
-          prometheus: active
+          - release: monitoring
+          - prometheus: active
 
 
       serviceMonitorNamespaceSelector: {}
