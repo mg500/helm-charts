@@ -79,10 +79,10 @@ kube-prometheus-stack:
       #   matchLabels:
       #     prometheus: somelabel
 
-      # serviceMonitorNamespaceSelector: {}
-      serviceMonitorNamespaceSelector:
-        matchLabels:
-          name: argocd
+      serviceMonitorNamespaceSelector: {}
+      #serviceMonitorNamespaceSelector:
+      #  matchLabels:
+      #    name: argocd
 
 
 
