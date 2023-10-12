@@ -42,8 +42,8 @@ kind: ServiceMonitor
 metadata:
   name: api-service-monitor
   labels:
-    release: prometheus
-    app: prometheus
+    release: monitoring
+    app: monitoring
 spec:
   jobLable: job
   endpoints:
