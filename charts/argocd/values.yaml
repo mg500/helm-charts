@@ -8,29 +8,10 @@ argo-cd:
     metrics:
       enabled: true
       serviceMonitor:
-        # -- Enable a prometheus ServiceMonitor
         enabled: true
-        # -- Prometheus ServiceMonitor interval
         interval: 30s
-        # -- Prometheus [RelabelConfigs] to apply to samples before scraping
-        relabelings: []
-        # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
-        metricRelabelings: []
-        # -- Prometheus ServiceMonitor selector
-        selector:
+        additionalLabels:
           release: monitoring
-          # prometheus: kube-prometheus
-
-        # -- Prometheus ServiceMonitor scheme
-        scheme: ""
-        # -- Prometheus ServiceMonitor tlsConfig
-        tlsConfig: {}
-        # -- Prometheus ServiceMonitor namespace
-        namespace: "" # "monitoring"
-        # -- Prometheus ServiceMonitor labels
-        additionalLabels: {}
-        # -- Prometheus ServiceMonitor annotations
-        annotations: {}
 
   server:
     extraArgs:
@@ -43,79 +24,25 @@ argo-cd:
     metrics:
       enabled: true
       serviceMonitor:
-        # -- Enable a prometheus ServiceMonitor
         enabled: true
-        # -- Prometheus ServiceMonitor interval
         interval: 30s
-        # -- Prometheus [RelabelConfigs] to apply to samples before scraping
-        relabelings: []
-        # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
-        metricRelabelings: []
-        # -- Prometheus ServiceMonitor selector
-        selector: {}
-          # prometheus: kube-prometheus
-
-        # -- Prometheus ServiceMonitor scheme
-        scheme: ""
-        # -- Prometheus ServiceMonitor tlsConfig
-        tlsConfig: {}
-        # -- Prometheus ServiceMonitor namespace
-        namespace: "" # "monitoring"
-        # -- Prometheus ServiceMonitor labels
         additionalLabels:
           release: monitoring
-        annotations: {}
 
   repoServer:
     metrics:
       enabled: true
       serviceMonitor:
-        # -- Enable a prometheus ServiceMonitor
         enabled: true
-        # -- Prometheus ServiceMonitor interval
         interval: 30s
-        # -- Prometheus [RelabelConfigs] to apply to samples before scraping
-        relabelings: []
-        # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
-        metricRelabelings: []
-        # -- Prometheus ServiceMonitor selector
-        selector: {}
-          # prometheus: kube-prometheus
-
-        # -- Prometheus ServiceMonitor scheme
-        scheme: ""
-        # -- Prometheus ServiceMonitor tlsConfig
-        tlsConfig: {}
-        # -- Prometheus ServiceMonitor namespace
-        namespace: "" # "monitoring"
-        # -- Prometheus ServiceMonitor labels
-        additionalLabels: {}
-        # -- Prometheus ServiceMonitor annotations
-        annotations: {}
+        additionalLabels:
+          release: monitoring
 
   applicationSet:
     metrics:
       enabled: true
       serviceMonitor:
-        # -- Enable a prometheus ServiceMonitor
         enabled: true
-        # -- Prometheus ServiceMonitor interval
         interval: 30s
-        # -- Prometheus [RelabelConfigs] to apply to samples before scraping
-        relabelings: []
-        # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
-        metricRelabelings: []
-        # -- Prometheus ServiceMonitor selector
-        selector: {}
-          # prometheus: kube-prometheus
-
-        # -- Prometheus ServiceMonitor scheme
-        scheme: ""
-        # -- Prometheus ServiceMonitor tlsConfig
-        tlsConfig: {}
-        # -- Prometheus ServiceMonitor namespace
-        namespace: "" # "monitoring"
-        # -- Prometheus ServiceMonitor labels
-        additionalLabels: {}
-        # -- Prometheus ServiceMonitor annotations
-        annotations: {}
+        additionalLabels:
+          release: monitoring
