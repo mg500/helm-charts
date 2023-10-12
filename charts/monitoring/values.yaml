@@ -58,9 +58,10 @@ kube-prometheus-stack:
     prometheusSpec:
       serviceMonitorSelectorNilUsesHelmValues: false
 
-      serviceMonitorSelector:
-        matchLabels:
-          release: monitoring
+      # DEFAULT #
+      # serviceMonitorSelector:
+      #   matchLabels:
+      #     release: monitoring
 
 
       serviceMonitorNamespaceSelector: {}
