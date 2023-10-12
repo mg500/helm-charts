@@ -82,6 +82,37 @@ kube-prometheus-stack:
   prometheus:
     enabled: true
     prometheusSpec:
+      ## If true, a nil or {} value for prometheus.prometheusSpec.serviceMonitorSelector will cause the
+      ## prometheus resource to be created with selectors based on values in the helm deployment,
+      ## which will also match the servicemonitors created
+      ##
+      serviceMonitorSelectorNilUsesHelmValues: true
+
+      ## ServiceMonitors to be selected for target discovery.
+      ## If {}, select all ServiceMonitors
+      ##
+      serviceMonitorSelector: {}
+      ## Example which selects ServiceMonitors with label "prometheus" set to "somelabel"
+      # serviceMonitorSelector:
+      #   matchLabels:
+      #     prometheus: somelabel
+
+      ## Namespaces to be selected for ServiceMonitor discovery.
+      ##
+      serviceMonitorNamespaceSelector: {}
+      ## Example which selects ServiceMonitors in namespaces with label "prometheus" set to "somelabel"
+      # serviceMonitorNamespaceSelector:
+      #   matchLabels:
+      #     prometheus: somelabel
+
+
+
+
+
+
+
+
+
       # serviceMonitorSelectorNilUsesHelmValues: false
       # ## Namespaces to be selected for ServiceMonitor discovery.
       # ##
@@ -94,9 +125,16 @@ kube-prometheus-stack:
       #   matchLabels:
       #     argocd: "true"
 
-      serviceMonitorNamespaceSelector: {}
+      # serviceMonitorNamespaceSelector: {}
         # matchLabels:
         #   prometheus: somelabel
+
+      # serviceMonitorSelector: {}
+      ## Example which selects ServiceMonitors with label "prometheus" set to "somelabel"
+      # serviceMonitorSelector:
+      #   matchLabels:
+      #     prometheus: somelabel
+
 
       # additionalScrapeConfigs:
     #   - job_name: 'fritzbox_exporter_fd'
