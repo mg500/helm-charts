@@ -66,9 +66,7 @@ kube-prometheus-stack:
 
   prometheus:
     enabled: true
-    prometheusSpec:
-      scrapeConfigSelector:
-        prometheus: system-monitoring-prometheus
+    # prometheusSpec:
       # additionalScrapeConfigs:
     #   - job_name: 'fritzbox_exporter_fd'
     #     static_configs:
@@ -78,6 +76,10 @@ kube-prometheus-stack:
     #     enabled: true
     #     name: additional-scrape-configs
     #     key: prometheus-additional.yaml
+    spec:
+      scrapeConfigSelector:
+        prometheus: system-monitoring-prometheus
+
 
   thanosRuler:
     enabled: false
