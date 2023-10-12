@@ -37,8 +37,8 @@ metadata:
   name: monitoring
   namespace: argocd
 spec:
-  #project: monitoring
-  project: default
+  project: monitoring
+  #project: default
   source:
     repoURL: 'https://github.com/mg500/helm-charts'
     targetRevision: main
