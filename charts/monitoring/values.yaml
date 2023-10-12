@@ -76,9 +76,7 @@ kube-prometheus-stack:
     #     enabled: true
     #     name: additional-scrape-configs
     #     key: prometheus-additional.yaml
-    spec:
-      scrapeConfigSelector:
-        prometheus: system-monitoring-prometheus
+
 
 
   thanosRuler:
