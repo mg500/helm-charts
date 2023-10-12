@@ -1,16 +1,16 @@
 
-alerting:
-  # -- Name of the alert channel as it is defined in the alertforwardings-domain-deployment. The default value is based on `grafanaProvisioningHelpers.domain`.
-  channel: ""
-  # -- Where to read alert JSONs from
-  paths:
-  - "alerts"
-dashboards:
-  # -- Enable provisioned dashboards
-  enabled: true
-  # -- Where to read dashboard JSONs from
-  paths:
-  - "dashboards"
+# alerting:
+#   # -- Name of the alert channel as it is defined in the alertforwardings-domain-deployment. The default value is based on `grafanaProvisioningHelpers.domain`.
+#   channel: ""
+#   # -- Where to read alert JSONs from
+#   paths:
+#   - "alerts"
+# dashboards:
+#   # -- Enable provisioned dashboards
+#   enabled: true
+#   # -- Where to read dashboard JSONs from
+#   paths:
+#   - "dashboards"
 
 
 
@@ -66,8 +66,10 @@ kube-prometheus-stack:
 
   prometheus:
     enabled: true
-    # prometheusSpec:
-    #   additionalScrapeConfigs:
+    prometheusSpec:
+      scrapeConfigSelector:
+        prometheus: system-monitoring-prometheus
+      # additionalScrapeConfigs:
     #   - job_name: 'fritzbox_exporter_fd'
     #     static_configs:
     #     - targets: ['10.10.10.100:10120']
