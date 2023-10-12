@@ -65,22 +65,15 @@ kube-prometheus-stack:
       ## ServiceMonitors to be selected for target discovery.
       ## If {}, select all ServiceMonitors
       ##
-      serviceMonitorSelector: {}
-      ## Example which selects ServiceMonitors with label "prometheus" set to "somelabel"
-      # serviceMonitorSelector:
-      #   matchLabels:
-      #     prometheus: somelabel
 
-      ## Namespaces to be selected for ServiceMonitor discovery.
-      ##
-      # serviceMonitorNamespaceSelector: {}
-      ## Example which selects ServiceMonitors in namespaces with label "prometheus" set to "somelabel"
-      # serviceMonitorNamespaceSelector:
-      #   matchLabels:
-      #     prometheus: somelabel
+      # serviceMonitorSelector: {}
+      serviceMonitorSelector:
+        matchLabels:
+          prometheus: somelabel
+
 
       serviceMonitorNamespaceSelector: {}
-      #serviceMonitorNamespaceSelector:
+      # serviceMonitorNamespaceSelector:
       #  matchLabels:
       #    name: argocd
 
