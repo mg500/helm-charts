@@ -7,7 +7,7 @@ grafanaProvisioning:
     labelValue: "1"
     directory: dashboards
     subDirectory:
-      - Custom
+      - Temp
 
 
   # alerts:
