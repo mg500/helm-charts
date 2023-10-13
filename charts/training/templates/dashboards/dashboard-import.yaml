@@ -1,4 +1,4 @@
-{{ if and (.Values.grafanaProvisioning.enabled | default "false")  (.Values.grafanaProvisioning.dashboards.enabled | default "false") }}
+{{- if and (.Values.grafanaProvisioning.enabled | default "false")  (.Values.grafanaProvisioning.dashboards.enabled | default "false") }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -8,5 +8,5 @@ metadata:
     {{ .Values.grafanaProvisioning.dashboards.label }}: {{ quote .Values.grafanaProvisioning.dashboards.labelValue }}
 data:
   test.json: |
-    {{ .Files.Get "dashboards/test.json" | nindent 4 }}
+    {{- .Files.Get "dashboards/test.json" | nindent 4 }}
 {{ end }}
