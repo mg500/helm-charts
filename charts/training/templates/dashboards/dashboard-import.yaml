@@ -1,4 +1,7 @@
 {{- if and (.Values.grafanaProvisioning.enabled | default "false")  (.Values.grafanaProvisioning.dashboards.enabled | default "false") }}
+# Alle dateinamen aus Ordner
+{{ $myDict := dict "name1" "value1" "name2" "value2" "name3" "value 3" }}
+{{- $fileList := .Files.Glob "dashboards/*" -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -9,4 +12,6 @@ metadata:
 data:
   test.json: |
     {{- .Files.Get "dashboards/test.json" | nindent 4 }}
+debug:
+  memory: {{ $fileList | quote }}
 {{ end }}
