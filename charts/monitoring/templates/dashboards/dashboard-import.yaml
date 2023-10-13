@@ -1,4 +1,4 @@
-{{ if .Values.grafanaProvisioning.dashboards.enabled }}
+{{ if and .Values.grafanaProvisioning.enabled .Values.grafanaProvisioning.dashboards.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:

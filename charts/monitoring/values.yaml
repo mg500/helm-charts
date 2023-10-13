@@ -3,9 +3,7 @@ grafanaProvisioning:
 
   dashboards:
     name: test
-    
-    
-    enabled: false
+    enabled: true
     paths:
       - "dashboards/infrastructure"
 
