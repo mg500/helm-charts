@@ -1,7 +1,10 @@
-grafana-provisioning:
+grafanaProvisioning:
   enabled: true
 
   dashboards:
+    name: test
+    
+    
     enabled: true
     paths:
       - "dashboards/infrastructure"
