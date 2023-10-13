@@ -7,4 +7,3 @@ grafanaProvisioning:
     labelValue: "1"
     directory: dashboards
     subDirectory: General
-
