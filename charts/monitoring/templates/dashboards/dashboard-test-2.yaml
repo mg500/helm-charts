@@ -1,11 +1,11 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: dashboard-test
+  name: dashboard-test-2
   labels:
     grafana_dashboard: "1"
 data:
-  test-dashboard.json: |
+  test-dashboard-2.json: |
     {
         "annotations": {
             "list": [
