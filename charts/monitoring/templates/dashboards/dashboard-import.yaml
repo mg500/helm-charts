@@ -11,7 +11,7 @@ metadata:
   labels:
     {{ $.Values.grafanaProvisioning.dashboards.label }}: {{ quote $.Values.grafanaProvisioning.dashboards.labelValue }}
   annotations:
-    grafana_dashboard_folder: test
+    grafana_dashboard_folder: "tmp/dashboards/test"
 data:
   {{ $dashboardFileName }}: |- 
     {{ $.Files.Get $path | nindent 4 }}
