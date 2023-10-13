@@ -12,5 +12,6 @@ metadata:
 data:
   {{ $dashboardFileName }}: |- 
     {{ $.Files.Get $path | nindent 4 }}
+---
 {{- end }}
 {{- end }}
