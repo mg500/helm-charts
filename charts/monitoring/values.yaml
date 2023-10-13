@@ -2,13 +2,13 @@ grafanaProvisioning:
   enabled: true
 
   dashboards:
-    name: test
+    enabled: true
     label: grafana_dashboard
     labelValue: "1"
-    
-    enabled: true
-    paths:
-      - "dashboards/infrastructure"
+    directory: dashboards
+    subDirectory: 
+      - General
+
 
   # alerts:
   #   enabled: true

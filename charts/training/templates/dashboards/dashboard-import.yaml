@@ -1,7 +1,8 @@
 {{- if and (.Values.grafanaProvisioning.enabled | default "false")  (.Values.grafanaProvisioning.dashboards.enabled | default "false") }}
-{{- $dashboarDirectory := .Values.grafanaProvisioning.directory }}
-{{- range $path, $_ :=  .Files.Glob  "dashboards/*.json" }}
-{{- $dashboardFileName := $path | trimPrefix "dashboards/" }}
+{{- $dashboarDirectory := $.Values.grafanaProvisioning.dashboards.directory }}
+{{- $dashboarSubDirectory := $.Values.grafanaProvisioning.dashboards.subDirectory }}
+{{- range $path, $_ :=  $.Files.Glob (printf "%s/%s/*.json" $dashboarDirectory $dashboarSubDirectory) }}
+{{- $dashboardFileName := base $path }}
 {{- $dashboardName := $dashboardFileName | trimSuffix ".json" }}
 apiVersion: v1
 kind: ConfigMap
@@ -11,7 +12,7 @@ metadata:
   labels:
     {{ $.Values.grafanaProvisioning.dashboards.label }}: {{ quote $.Values.grafanaProvisioning.dashboards.labelValue }}
   annotations:
-    grafana_dashboard_folder: "tmp/dashboards/test"
+    grafana_dashboard_folder: "test"
 data:
   {{ $dashboardFileName }}: |- 
     {{ $.Files.Get $path | nindent 4 }}
