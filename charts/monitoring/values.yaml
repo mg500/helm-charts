@@ -45,6 +45,7 @@ kube-prometheus-stack:
         searchNamespace: monitoring
         provider:
           allowUiUpdates: false
+        folderAnnotation: grafana_dashboard_folder
 
   prometheusOperator:
     enabled: true
