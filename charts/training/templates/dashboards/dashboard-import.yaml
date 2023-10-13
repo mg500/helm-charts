@@ -1,4 +1,5 @@
 {{- if and (.Values.grafanaProvisioning.enabled | default "false")  (.Values.grafanaProvisioning.dashboards.enabled | default "false") }}
+{{- $dashboarDirectory := .Values.grafanaProvisioning.directory }}
 {{- range $path, $_ :=  .Files.Glob  "dashboards/*.json" }}
 {{- $dashboardFileName := $path | trimPrefix "dashboards/" }}
 {{- $dashboardName := $dashboardFileName | trimSuffix ".json" }}
