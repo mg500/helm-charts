@@ -6,7 +6,9 @@ grafanaProvisioning:
     label: grafana_dashboard
     labelValue: "1"
     directory: dashboards
-    subDirectory: Custom
+    subDirectory:
+      - Custom
+      - ArgoCD
 
 
   # alerts:

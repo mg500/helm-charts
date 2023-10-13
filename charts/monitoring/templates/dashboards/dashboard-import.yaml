@@ -1,6 +1,7 @@
 {{- if and (.Values.grafanaProvisioning.enabled | default "false")  (.Values.grafanaProvisioning.dashboards.enabled | default "false") }}
 {{- $dashboarDirectory := $.Values.grafanaProvisioning.dashboards.directory }}
-{{- $dashboarSubDirectory := $.Values.grafanaProvisioning.dashboards.subDirectory }}
+{{- range .Values.grafanaProvisioning.dashboards.subDirectory }}
+{{- $dashboarSubDirectory := .}}
 {{- range $dashboardPath, $_ :=  $.Files.Glob (printf "%s/%s/*.json" $dashboarDirectory $dashboarSubDirectory) }}
 {{- $dashboardFileName := base $dashboardPath }}
 {{- $dashboardName := $dashboardFileName | trimSuffix ".json" }}
@@ -12,10 +13,11 @@ metadata:
   labels:
     {{ $.Values.grafanaProvisioning.dashboards.label }}: {{ quote $.Values.grafanaProvisioning.dashboards.labelValue }}
   annotations:
-    grafana_dashboard_folder: $dashboarSubDirectory
+    grafana_dashboard_folder: {{ quote $dashboarSubDirectory }}
 data:
   {{ $dashboardFileName }}: |- 
     {{ $.Files.Get $dashboardPath | nindent 4 }}
 ---
+{{- end }}
 {{- end }}
 {{- end }}

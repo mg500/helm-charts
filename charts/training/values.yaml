@@ -6,5 +6,15 @@ grafanaProvisioning:
     label: grafana_dashboard
     labelValue: "1"
     directory: dashboards
-    subDirectory: 
+    subDirectory:
       - General
+      - argocd
+
+# favorite:
+#   drink: coffee
+#   food: pizza
+# pizzaToppings:
+#   - mushrooms
+#   - cheese
+#   - peppers
+#   - onions
