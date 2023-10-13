@@ -5,7 +5,7 @@ grafanaProvisioning:
     name: test
     
     
-    enabled: true
+    enabled: false
     paths:
       - "dashboards/infrastructure"
 
