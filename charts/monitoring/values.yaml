@@ -8,7 +8,7 @@ grafanaProvisioning:
     directory: dashboards
     subDirectory:
       - Custom
-      - ArgoCD
+      - Argocd
 
 
   # alerts:
