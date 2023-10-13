@@ -6,8 +6,7 @@ grafanaProvisioning:
     label: grafana_dashboard
     labelValue: "1"
     directory: dashboards
-    subDirectory: 
-      - General
+    subDirectory: Custom
 
 
   # alerts:
