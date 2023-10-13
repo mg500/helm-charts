@@ -1,7 +1,10 @@
 {{- if and (.Values.grafanaProvisioning.enabled | default "false")  (.Values.grafanaProvisioning.dashboards.enabled | default "false") }}
 {{- $dashboarDirectory := $.Values.grafanaProvisioning.dashboards.directory }}
 {{- $dashboarSubDirectory := $.Values.grafanaProvisioning.dashboards.subDirectory }}
-{{- range $dashboardPath, $_ :=  $.Files.Glob (printf "%s/%s/*.json" $dashboarDirectory $dashboarSubDirectory) }}
+
+{{- range $dashboardFolder, $temp := $.Values.grafanaProvisioning.dashboards.subDirectory }}
+{{- range $dashboardPath, $_ :=  $.Files.Glob (printf "%s/%s/*.json" $dashboarDirectory $dashboardFolder) }}
+{{.}}
 {{- $dashboardFileName := base $dashboardPath }}
 {{- $dashboardName := $dashboardFileName | trimSuffix ".json" }}
 apiVersion: v1
@@ -17,5 +20,6 @@ data:
   {{ $dashboardFileName }}: |- 
     {{ $.Files.Get $dashboardPath | nindent 4 }}
 ---
+{{- end }}
 {{- end }}
 {{- end }}
