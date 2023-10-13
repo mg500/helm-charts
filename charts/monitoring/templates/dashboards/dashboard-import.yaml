@@ -1,0 +1,43 @@
+# {{- define "grafana-provisioning-helpers.dashboards-configmap" -}}
+# {{- $chartEnabledParams := (dict "v" .Values "keyNames" (list "grafanaProvisioningHelpers" "enabled") "defaultValue" true) -}}
+# {{- $chartEnabled := eq "true" (include "grafana-provisioning-helpers.get-boolean" $chartEnabledParams) -}}
+# {{- $dashboardsEnabledParams := (dict "v" .Values "keyNames" (list "grafanaProvisioningHelpers" "dashboards" "enabled") "defaultValue" true) -}}
+# {{- $dashboardsEnabled := eq "true" (include "grafana-provisioning-helpers.get-boolean" $dashboardsEnabledParams) -}}
+
+# {{- if (and $chartEnabled $dashboardsEnabled) -}}
+# {{- $stage := .Values.global.sinapse.cluster.stage }}
+# {{- $defaultDomain := .Release.Name | replace (print $stage "-") "" }}
+
+# {{- $instanceParams := (dict "v" .Values "keyNames" (list "grafanaProvisioningHelpers" "instance") "defaultValue" "user") -}}
+# {{- $instance := tpl (include "grafana-provisioning-helpers.get-string" $instanceParams) . -}}
+
+# {{- $domainParams := (dict "v" .Values "keyNames" (list "grafanaProvisioningHelpers" "domain") "defaultValue" $defaultDomain) -}}
+# {{- $domain := tpl (include "grafana-provisioning-helpers.get-string" $domainParams) . -}}
+
+# {{- $dashboardPathsParams := (dict "v" .Values "keyNames" (list "grafanaProvisioningHelpers" "dashboards" "paths") "defaultValue" (list "dashboards")) -}}
+# {{- $dashboardPaths := (tpl (include "grafana-provisioning-helpers.get-array" $dashboardPathsParams) . | fromYaml).ret -}}
+
+# {{- range $dashboardPaths -}}
+# {{- $dashboards := $.Files.Glob (printf "%s/*.json" .) }}
+# {{- range $dashboardPath, $binary := $dashboards }}
+# {{- $dashboardBase := base $dashboardPath }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ trimSuffix ".json" $dashboardBase }}
+  labels:
+    app.kubernetes.io/name: {{ trimSuffix ".json" $dashboardBase }}
+    app.kubernetes.io/part-of: {{ $instance }}-grafana
+    app.kubernetes.io/component: dashboard
+    app.kubernetes.io/managed-by: helm
+    grafana_dashboard: {{ $instance | quote }}
+  annotations:
+    grafana_dashboard_folder: {{ $domain | quote }}
+data:
+  {{ $dashboardBase }}: >
+    {{- set ($dashboards.Get $dashboardPath | fromJson) "uid" (substr 0 15 (printf "%s%s" $domain $dashboardBase | sha256sum)) | toJson | nindent 4 }}
+---
+# {{- end }}
+# {{- end -}}
+# {{- end -}}
+# {{- end -}}
