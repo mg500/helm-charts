@@ -3,8 +3,10 @@ grafanaProvisioning:
 
   dashboards:
     name: test
-    
+    label: grafana_dashboard
+    labelValue: "1"
     
     enabled: true
     paths:
       - "dashboards/infrastructure"
+
