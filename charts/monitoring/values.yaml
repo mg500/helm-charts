@@ -1,15 +1,22 @@
-# alerting:
-#   # -- Name of the alert channel as it is defined in the alertforwardings-domain-deployment. The default value is based on `grafanaProvisioningHelpers.domain`.
-#   channel: ""
-#   # -- Where to read alert JSONs from
-#   paths:
-#   - "alerts"
-# dashboards:
-#   # -- Enable provisioned dashboards
-#   enabled: true
-#   # -- Where to read dashboard JSONs from
-#   paths:
-#   - "dashboards"
+grafana-provisioning:
+  enabled: true
+
+  dashboards:
+    enabled: true
+    paths:
+      - "dashboards/infrastructure"
+
+  # alerts:
+  #   enabled: true
+
+  #   users:
+  #   - id: mg123456
+  #     email: max@mail.de
+    
+  #   alerts:
+  #   - name: test-alert
+  #     owner: mg123456
+  #     enabled: true
 
 
 kube-prometheus-stack:
