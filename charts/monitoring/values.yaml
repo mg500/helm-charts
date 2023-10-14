@@ -1,5 +1,15 @@
+grafanaProvisioning:
+  enabled: true
 
-
+  dashboards:
+    enabled: true
+    label: grafana_dashboard
+    labelValue: "1"
+    directory: dashboards
+    grafanaDefaultFolder: Infrastructure
+    #transferFolderStructure: true
+    
+  
   # alerts:
   #   enabled: true
 

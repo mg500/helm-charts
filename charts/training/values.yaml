@@ -6,8 +6,9 @@ grafanaProvisioning:
     label: grafana_dashboard
     labelValue: "1"
     directory: dashboards
-    subDirectory:
-      - Temp
+    grafanaDefaultFolder: Infrastructure
+    transferFolderStructure: true
+    tempSubDir: temp
 
 # favorite:
 #   drink: coffee

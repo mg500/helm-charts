@@ -1,9 +1,6 @@
 {{- if and (.Values.grafanaProvisioning.enabled | default "false")  (.Values.grafanaProvisioning.dashboards.enabled | default "false") }}
 {{- $dashboarDirectory := $.Values.grafanaProvisioning.dashboards.directory }}
 {{- $grafanaDefaultFolder := $.Values.grafanaProvisioning.dashboards.grafanaDefaultFolder }}
-#Neu
-{{- $dashboarSubDirectory := $.Values.grafanaProvisioning.dashboards.tempSubDir }}
-
 {{- range $dashboardPath, $_ :=  $.Files.Glob (printf "%s/*.json" $dashboarDirectory) }}
 {{- $dashboardFileName := base $dashboardPath }}
 {{- $dashboardName := $dashboardFileName | trimSuffix ".json" }}
@@ -16,9 +13,9 @@ metadata:
     {{ $.Values.grafanaProvisioning.dashboards.label }}: {{ quote $.Values.grafanaProvisioning.dashboards.labelValue }}
   annotations:
     grafana_dashboard_folder: {{ quote $grafanaDefaultFolder }}
+data:
+  {{ $dashboardFileName }}: |- 
+    {{ $.Files.Get $dashboardPath | nindent 4 }}
 ---
 {{- end }}
 {{- end }}
-
-
-# Variable gesetzt?
