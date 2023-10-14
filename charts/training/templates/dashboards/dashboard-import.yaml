@@ -3,14 +3,15 @@
 {{- $grafanaDefaultFolder := $.Values.grafanaProvisioning.dashboards.grafanaDefaultFolder }}
 {{- $searchPath := $.Files.Glob (printf "%s/*.json" $dashboardDirectory) }}
 
-{{- if $.Values.grafanaProvisioning.dashboards.transferFolderStructure | default "false" }}
+{{- if $.Values.grafanaProvisioning.dashboards.transferFolderStructure }}
 {{- $dashboarSubDirectory := $.Values.grafanaProvisioning.dashboards.tempSubDir }}
-{{- $searchPath := $.Files.Glob (printf "%s/%s/*.json" $dashboardDirectory $dashboarSubDirectory) }}
-{{ end}}
+{{- $searchPath = $.Files.Glob (printf "%s/%s/*.json" $dashboardDirectory $dashboarSubDirectory) }}
+{{ end }}
 
 {{- range $dashboardPath, $_ :=  $searchPath }}
 {{- $dashboardFileName := base $dashboardPath }}
 {{- $dashboardName := $dashboardFileName | trimSuffix ".json" }}
+
 apiVersion: v1
 kind: ConfigMap
 metadata:
