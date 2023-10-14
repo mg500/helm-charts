@@ -1,23 +1,23 @@
-{{- if and (.Values.grafanaProvisioning.enabled | default "false")  (.Values.grafanaProvisioning.dashboards.enabled | default "false") }}
-{{- $dashboarDirectory := $.Values.grafanaProvisioning.dashboards.directory }}
-{{- range .Values.grafanaProvisioning.dashboards.subDirectory }}
-{{- $dashboarSubDirectory := .}}
-{{- range $dashboardPath, $_ :=  $.Files.Glob (printf "%s/%s/*.json" $dashboarDirectory $dashboarSubDirectory) }}
-{{- $dashboardFileName := base $dashboardPath }}
-{{- $dashboardName := $dashboardFileName | trimSuffix ".json" }}
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ $dashboardName }}
-  namespace: {{ $.Release.Namespace }}
-  labels:
-    {{ $.Values.grafanaProvisioning.dashboards.label }}: {{ quote $.Values.grafanaProvisioning.dashboards.labelValue }}
-  annotations:
-    grafana_dashboard_folder: {{ quote $dashboarSubDirectory }}
-data:
-  {{ $dashboardFileName }}: |- 
-    {{ $.Files.Get $dashboardPath | nindent 4 }}
----
-{{- end }}
-{{- end }}
-{{- end }}
+# {{- if and (.Values.grafanaProvisioning.enabled | default "false")  (.Values.grafanaProvisioning.dashboards.enabled | default "false") }}
+# {{- $dashboarDirectory := $.Values.grafanaProvisioning.dashboards.directory }}
+# {{- range .Values.grafanaProvisioning.dashboards.subDirectory }}
+# {{- $dashboarSubDirectory := .}}
+# {{- range $dashboardPath, $_ :=  $.Files.Glob (printf "%s/%s/*.json" $dashboarDirectory $dashboarSubDirectory) }}
+# {{- $dashboardFileName := base $dashboardPath }}
+# {{- $dashboardName := $dashboardFileName | trimSuffix ".json" }}
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: {{ $dashboardName }}
+#   namespace: {{ $.Release.Namespace }}
+#   labels:
+#     {{ $.Values.grafanaProvisioning.dashboards.label }}: {{ quote $.Values.grafanaProvisioning.dashboards.labelValue }}
+#   annotations:
+#     grafana_dashboard_folder: {{ quote $dashboarSubDirectory }}
+# data:
+#   {{ $dashboardFileName }}: |- 
+#     {{ $.Files.Get $dashboardPath | nindent 4 }}
+# ---
+# {{- end }}
+# {{- end }}
+# {{- end }}
