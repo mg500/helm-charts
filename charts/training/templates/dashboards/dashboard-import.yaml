@@ -1,10 +1,14 @@
 {{- if and (.Values.grafanaProvisioning.enabled | default "false")  (.Values.grafanaProvisioning.dashboards.enabled | default "false") }}
-{{- $dashboarDirectory := $.Values.grafanaProvisioning.dashboards.directory }}
+{{- $dashboardDirectory := $.Values.grafanaProvisioning.dashboards.directory }}
 {{- $grafanaDefaultFolder := $.Values.grafanaProvisioning.dashboards.grafanaDefaultFolder }}
-#Neu
-{{- $dashboarSubDirectory := $.Values.grafanaProvisioning.dashboards.tempSubDir }}
+{{- $searchPath := $.Files.Glob (printf "%s/*.json" $dashboardDirectory) }}
 
-{{- range $dashboardPath, $_ :=  $.Files.Glob (printf "%s/*.json" $dashboarDirectory) }}
+{{- if $.Values.grafanaProvisioning.dashboards.transferFolderStructure | default "false" }}
+{{- $dashboarSubDirectory := $.Values.grafanaProvisioning.dashboards.tempSubDir }}
+{{- $searchPath := $.Files.Glob (printf "%s/%s/*.json" $dashboardDirectory $dashboarSubDirectory) }}
+{{ end}}
+
+{{- range $dashboardPath, $_ :=  $searchPath }}
 {{- $dashboardFileName := base $dashboardPath }}
 {{- $dashboardName := $dashboardFileName | trimSuffix ".json" }}
 apiVersion: v1
@@ -19,6 +23,3 @@ metadata:
 ---
 {{- end }}
 {{- end }}
-
-
-# Variable gesetzt?
