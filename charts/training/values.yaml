@@ -1,12 +1,13 @@
 grafanaProvisioning:
   enabled: true
-
   dashboards:
     enabled: true
     label: grafana_dashboard
     labelValue: "1"
     directory: dashboards
-    grafanaDefaultFolder: blub
+    # Set the folder in which the dashboards will be stored
+    grafanaDefaultFolder: Custom
+    # Transfer the folder structure from your directory to grafana
     transferFolderStructure: true
 
 # favorite:

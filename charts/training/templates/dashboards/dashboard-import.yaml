@@ -1,18 +1,16 @@
 {{- if and (.Values.grafanaProvisioning.enabled | default "false")  (.Values.grafanaProvisioning.dashboards.enabled | default "false") }}
-{{- $dashboardDirectory := $.Values.grafanaProvisioning.dashboards.directory }}
-{{- $grafanaFolder := $.Values.grafanaProvisioning.dashboards.grafanaDefaultFolder }}
+{{- $dashboardDirectory := $.Values.grafanaProvisioning.dashboards.directory | default "dashboards" }}
+{{- $grafanaFolder := $.Values.grafanaProvisioning.dashboards.grafanaDefaultFolder | default "Custom" }}
 {{- $searchPath := $.Files.Glob (printf "%s/*.json" $dashboardDirectory) }}
-{{- if $.Values.grafanaProvisioning.dashboards.transferFolderStructure}}
+{{- if $.Values.grafanaProvisioning.dashboards.transferFolderStructure | default "false"}}
 {{- $searchPath = $.Files.Glob (printf "%s/**/*.json" $dashboardDirectory) }}
-{{ end }}
-
+{{- end }}
 {{- range $dashboardPath, $_ := $searchPath}}
 {{- if $.Values.grafanaProvisioning.dashboards.transferFolderStructure}}
 {{- $grafanaFolder = base (dir $dashboardPath) }}
 {{ end }}
 {{- $dashboardFileName := base $dashboardPath }}
 {{- $dashboardName := $dashboardFileName | trimSuffix ".json" }}
-
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -22,7 +20,6 @@ metadata:
     {{ $.Values.grafanaProvisioning.dashboards.label }}: {{ quote $.Values.grafanaProvisioning.dashboards.labelValue }}
   annotations:
     grafana_dashboard_folder: {{ quote $grafanaFolder }}
-
 ---
 {{- end }}
 {{- end }}
