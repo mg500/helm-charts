@@ -5,7 +5,7 @@ grafanaProvisioning:
     label: grafana_dashboard
     labelValue: "1"
     directory: dashboards
-    # Set the folder in which the dashboards will be stored
+    # Set the folder in which the dashboards will be stored ("General" is not possible)
     grafanaDefaultFolder: Custom
     # Transfer the folder structure from your directory to grafana
     transferFolderStructure: true
