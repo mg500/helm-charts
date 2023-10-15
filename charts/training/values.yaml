@@ -8,6 +8,7 @@ grafanaProvisioning:
     # Set the folder in which the dashboards will be stored ("General" is not possible)
     grafanaDefaultFolder: Custom
     # Transfer the folder structure from your directory to grafana
+    # grafanaDefaultFolder does not matter in this case
     transferFolderStructure: true
 
 # favorite:
