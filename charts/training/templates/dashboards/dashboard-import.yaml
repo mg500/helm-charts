@@ -16,15 +16,13 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name:  {{ $dashboardName }}
+  name:  {{ $grafanaFolder }}-{{ $dashboardName }}
   namespace: {{ $.Release.Namespace }}
   labels:
     {{ $.Values.grafanaProvisioning.dashboards.label }}: {{ quote $.Values.grafanaProvisioning.dashboards.labelValue }}
   annotations:
     grafana_dashboard_folder: {{ quote $grafanaFolder }}
-data:
-  {{ $dashboardFileName }}: |- 
-    {{ $.Files.Get $dashboardPath | nindent 4 }}
+
 ---
 {{- end }}
 {{- end }}

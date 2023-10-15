@@ -16,7 +16,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name:  {{ $dashboardName }}
+  name:  {{ $grafanaFolder }}-{{ $dashboardName }}
   namespace: {{ $.Release.Namespace }}
   labels:
     {{ $.Values.grafanaProvisioning.dashboards.label }}: {{ quote $.Values.grafanaProvisioning.dashboards.labelValue }}
