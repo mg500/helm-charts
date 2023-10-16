@@ -5,32 +5,37 @@ grafanaProvisioning:
     label: grafana_dashboard
     labelValue: "1"
     directory: dashboards
-    # Set the folder in which the dashboards will be stored ("General" is not possible)
+    ## Set the folder in which the dashboards will be stored ("General" is not possible)
     grafanaDefaultFolder: Custom
-    # Transfer the folder structure from your directory to grafana
-    # grafanaDefaultFolder does not matter in this case
+    ## Transfer the folder structure from your directory to grafana
+    ## grafanaDefaultFolder does not matter in this case
     transferFolderStructure: true
 
-  
   # alerts:
   #   enabled: true
 
   #   users:
   #   - id: mg123456
   #     email: max@mail.de
-    
+
   #   alerts:
   #   - name: test-alert
   #     owner: mg123456
   #     enabled: true
 
-
 kube-prometheus-stack:
-
   alertmanager:
     enabled: true
     ingress:
       enabled: false
+
+    alertmanagerSpec:
+      ruleSelector:
+        matchLabels:
+          release: monitoring
+      alertmanagerConfigSelector:
+        matchLabels:
+          release: monitoring
 
   grafana:
     enabled: true
@@ -49,105 +54,43 @@ kube-prometheus-stack:
           allowUiUpdates: false
           foldersFromFilesStructure: true
         folderAnnotation: grafana_dashboard_folder
-          
 
   prometheusOperator:
     enabled: true
-    # namespaces: {}
-    # # releaseNamespace: true
-    # # additional:
-    # # - kube-system
-
-    # ## Namespaces not to scope the interaction of the Prometheus Operator (deny list).
-    # ##
-    # denyNamespaces: []
-
-    # ## Filter namespaces to look for prometheus-operator custom resources
-    # ##
-    # alertmanagerInstanceNamespaces: []
-    # alertmanagerConfigNamespaces: []
-    # prometheusInstanceNamespaces: []
-    # thanosRulerInstanceNamespaces: []
 
   prometheus:
     enabled: true
     prometheusSpec:
       serviceMonitorSelectorNilUsesHelmValues: false
-
-      # DEFAULT #
-      # serviceMonitorSelector:
-      #   matchLabels:
-      #     release: monitoring
-
-
+      serviceMonitorSelector:
+        matchLabels:
+          release: monitoring
       serviceMonitorNamespaceSelector: {}
-      # serviceMonitorNamespaceSelector:
-      #  matchLabels:
-      #    name: argocd
-
-
-
-
-
-
-
-
-      # serviceMonitorSelectorNilUsesHelmValues: false
-      # ## Namespaces to be selected for ServiceMonitor discovery.
-      # ##
-      # serviceMonitorNamespaceSelector: {}
-      # ## Example which selects ServiceMonitors in namespaces with label "prometheus" set to "somelabel"
-      # # serviceMonitorNamespaceSelector:
-      # #   matchLabels:
-      # #     prometheus: somelabel
-      # serviceMonitorNamespaceSelector:
-      #   matchLabels:
-      #     argocd: "true"
-
-      # serviceMonitorNamespaceSelector: {}
-        # matchLabels:
-        #   prometheus: somelabel
-
-      # serviceMonitorSelector: {}
-      ## Example which selects ServiceMonitors with label "prometheus" set to "somelabel"
-      # serviceMonitorSelector:
-      #   matchLabels:
-      #     prometheus: somelabel
-
-
       additionalScrapeConfigs:
-      - job_name: 'fritzbox_exporter_fd'
-        static_configs:
-        - targets: ['10.10.10.100:10120']
-
-    #   additionalScrapeConfigsSecret: 
-    #     enabled: true
-    #     name: additional-scrape-configs
-    #     key: prometheus-additional.yaml
-
-
+        - job_name: "fritzbox_exporter_fd"
+          static_configs:
+            - targets: ["10.10.10.100:10120"]
 
   thanosRuler:
     enabled: false
 
-
-  # Scraping
+  ## Scraping
 
   kubeApiServer:
     enabled: true
- 
+
   kubelet:
     enabled: true
-    
+
   kubeControllerManager:
     enabled: true
 
   coreDns:
     enabled: true
-  
+
   kubeDns:
     enabled: false
-    
+
   kubeEtcd:
     enabled: true
 
@@ -162,8 +105,3 @@ kube-prometheus-stack:
 
   nodeExporter:
     enabled: true
-    operatingSystems:
-      linux:
-        enabled: true
-      darwin:
-        enabled: false

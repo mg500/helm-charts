@@ -11,11 +11,9 @@ grafanaProvisioning:
     # grafanaDefaultFolder does not matter in this case
     transferFolderStructure: true
 
-# favorite:
-#   drink: coffee
-#   food: pizza
-# pizzaToppings:
-#   - mushrooms
-#   - cheese
-#   - peppers
-#   - onions
+alertmanagerProvisioning:
+  enabled: true
+
+  users:
+    - id: mg123456
+      Email: mg@mail.de
