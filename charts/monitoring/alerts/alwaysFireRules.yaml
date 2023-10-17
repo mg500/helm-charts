@@ -1,0 +1,17 @@
+groups:
+  - name: AlwaysFireRules
+    rules:
+      - alert: Fire
+        expr: vector(1)
+        for: 0m
+        labels:
+          group: critical
+        annotations:
+          summary: ExampleAlert
+      - alert: Fire 2
+        expr: vector(1)
+        for: 0m
+        labels:
+          group: warning
+        annotations:
+          summary: ExampleAlert

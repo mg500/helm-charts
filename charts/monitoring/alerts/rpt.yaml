@@ -1,0 +1,8 @@
+groups:
+  - name: rpt
+    rules:
+      - alert: IsItDown
+        expr: up == 0
+        for: 0m
+        labels:
+          group: warning

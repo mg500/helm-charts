@@ -63,7 +63,6 @@ kube-prometheus-stack:
     enabled: true
     ingress:
       enabled: false
-
     alertmanagerSpec:
       # Temp
       logLevel: debug
@@ -72,39 +71,58 @@ kube-prometheus-stack:
       alertmanagerConfigSelector:
         matchLabels:
           resource: prometheus
-
     config:
-      global:
-        smarthost: "mail.gmx.net:587"
-        hello: "mail.gmx.net"
-        from: "alerting-kubernetes@gmx.de"
-        auth_username: "alerting-kubernetes@gmx.de"
-        auth_password: "##sichabc123"
-        require_tls: true
       route:
         group_by: ["namespace"]
         group_wait: 0s
-        group_interval: 2m
-        repeat_interval: 12h
-        receiver: "discord"
+        group_interval: 0s
+        repeat_interval: 1m
+        receiver: "default_receiver"
         routes:
-          - receiver: "mail"
+          - receiver: "discord"
             matchers:
-              - alertname = down
-              - severity =~ "warning|critical"
-          # - receiver: "discord"
-          #   matchers:
-          #     - alertname = down
-          #     - severity =~ "warning|critical"
+              - alertname = Fire
+              #- group = "critical"
       receivers:
-        - name: "mail"
-          email_configs:
-            - to: "maxgoeb@gmx.de"
-              # to: 'user1@example.com, user2@example.com'
-              send_resolved: true
-        # - name: "discord"
-        #   discord_configs:
-        #     - webhook_url: "https://discordapp.com/api/webhooks/1163728933942997022/aSSYAPj544bpTA5vxv8ebTKWoFLTwKxfmzVGfO47ZATp_quGvXr9JHPLTT9C8mbz6a3t"
+        - name: "default_receiver"
+          discord_configs:
+            - webhook_url: "https://disasdasdcordap.com/api/webhooks/1163728933942997022/aSSYAPj544bpTA5vxv8ebTKWoFLTwKxfmzVGfO47ZATp_quGvXr9JHPLTT9C8mbz6a3t"
+        - name: "discord"
+          discord_configs:
+            - webhook_url: "https://discordapp.com/api/webhooks/1163728933942997022/aSSYAPj544bpTA5vxv8ebTKWoFLTwKxfmzVGfO47ZATp_quGvXr9JHPLTT9C8mbz6a3t"
+
+    # config:
+    #   global:
+    #     smarthost: "mail.gmx.net:587"
+    #     hello: "mail.gmx.net"
+    #     from: "alerting-kubernetes@gmx.de"
+    #     auth_username: "alerting-kubernetes@gmx.de"
+    #     auth_password: "##sichabc123"
+    #     require_tls: true
+    #   route:
+    #     group_by: ["namespace"]
+    #     group_wait: 0s
+    #     group_interval: 2m
+    #     repeat_interval: 12h
+    #     receiver: "discord"
+    #     routes:
+    #       - receiver: "mail"
+    #         matchers:
+    #           - alertname = down
+    #           - severity =~ "warning|critical"
+    #       # - receiver: "discord"
+    #       #   matchers:
+    #       #     - alertname = down
+    #       #     - severity =~ "warning|critical"
+    #   receivers:
+    #     - name: "mail"
+    #       email_configs:
+    #         - to: "maxgoeb@gmx.de"
+    #           # to: 'user1@example.com, user2@example.com'
+    #           send_resolved: true
+    #     # - name: "discord"
+    #     #   discord_configs:
+    #     #     - webhook_url: "https://discordapp.com/api/webhooks/1163728933942997022/aSSYAPj544bpTA5vxv8ebTKWoFLTwKxfmzVGfO47ZATp_quGvXr9JHPLTT9C8mbz6a3t"
 
   grafana:
     enabled: true
@@ -113,8 +131,6 @@ kube-prometheus-stack:
     adminPassword: admin
     ingress:
       enabled: false
-    nodeSelector:
-      location: 06-Fulda-Steinauer-Str
     sidecar:
       dashboards:
         enabled: true
@@ -125,6 +141,12 @@ kube-prometheus-stack:
           allowUiUpdates: false
           foldersFromFilesStructure: true
         folderAnnotation: grafana_dashboard_folder
+      # datasources:
+      #   alertmanager:
+      #     enabled: true
+      #     uid: alertmanager
+      #     handleGrafanaManagedAlerts: false
+      #     implementation: prometheus
 
   prometheusOperator:
     enabled: true
