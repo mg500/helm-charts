@@ -24,18 +24,70 @@ grafanaProvisioning:
   #     enabled: true
 
 kube-prometheus-stack:
+  ## Create default rules for monitoring the cluster
+  ##
+  defaultRules:
+    create: false
+    rules:
+      alertmanager: true
+      etcd: true
+      configReloaders: true
+      general: true
+      k8s: true
+      kubeApiserverAvailability: true
+      kubeApiserverBurnrate: true
+      kubeApiserverHistogram: true
+      kubeApiserverSlos: true
+      kubeControllerManager: true
+      kubelet: true
+      kubeProxy: true
+      kubePrometheusGeneral: true
+      kubePrometheusNodeRecording: true
+      kubernetesApps: true
+      kubernetesResources: true
+      kubernetesStorage: true
+      kubernetesSystem: true
+      kubeSchedulerAlerting: true
+      kubeSchedulerRecording: true
+      kubeStateMetrics: true
+      network: true
+      node: true
+      nodeExporterAlerting: true
+      nodeExporterRecording: true
+      prometheus: true
+      prometheusOperator: true
+      windows: true
+
   alertmanager:
     enabled: true
     ingress:
       enabled: false
 
     alertmanagerSpec:
-      ruleSelector:
-        matchLabels:
-          release: monitoring
+      # Temp
+      # logLevel: debug
+      # Temp
+      alertmanagerConfigNamespaceSelector: {}
       alertmanagerConfigSelector:
         matchLabels:
-          release: monitoring
+          resource: prometheus
+
+    config:
+      route:
+        group_by: ["namespace"]
+        group_wait: 30s
+        group_interval: 5m
+        repeat_interval: 12h
+        receiver: discord
+        routes:
+          - receiver: discord
+            matchers:
+              - alertname = down
+              - severity =~ "warning|critical"
+      receivers:
+        - name: discord
+          discord_configs:
+            - webhook_url: https://discordapp.com/api/webhooks/1163728933942997022/aSSYAPj544bpTA5vxv8ebTKWoFLTwKxfmzVGfO47ZATp_quGvXr9JHPLTT9C8mbz6a3t
 
   grafana:
     enabled: true
@@ -61,6 +113,9 @@ kube-prometheus-stack:
   prometheus:
     enabled: true
     prometheusSpec:
+      ruleSelector:
+        matchLabels:
+          release: monitoring
       serviceMonitorSelectorNilUsesHelmValues: false
       serviceMonitorSelector:
         matchLabels:
