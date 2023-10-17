@@ -1,0 +1,10 @@
+groups:
+  - name: ./example.rules
+    rules:
+      - alert: ExampleAlert
+        expr: vector(1)
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: ExampleAlert

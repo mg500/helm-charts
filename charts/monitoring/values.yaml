@@ -11,8 +11,9 @@ grafanaProvisioning:
     ## grafanaDefaultFolder does not matter in this case
     transferFolderStructure: true
 
-  # alerts:
-  #   enabled: true
+alertmanagerProvisioning:
+  enabled: true
+  directory: alerts
 
   #   users:
   #   - id: mg123456
@@ -65,7 +66,7 @@ kube-prometheus-stack:
 
     alertmanagerSpec:
       # Temp
-      # logLevel: debug
+      logLevel: debug
       # Temp
       alertmanagerConfigNamespaceSelector: {}
       alertmanagerConfigSelector:
@@ -73,21 +74,37 @@ kube-prometheus-stack:
           resource: prometheus
 
     config:
+      global:
+        smarthost: "mail.gmx.net:587"
+        hello: "mail.gmx.net"
+        from: "alerting-kubernetes@gmx.de"
+        auth_username: "alerting-kubernetes@gmx.de"
+        auth_password: "##sichabc123"
+        require_tls: true
       route:
         group_by: ["namespace"]
-        group_wait: 30s
-        group_interval: 5m
+        group_wait: 0s
+        group_interval: 2m
         repeat_interval: 12h
-        receiver: discord
+        receiver: "discord"
         routes:
-          - receiver: discord
+          - receiver: "mail"
             matchers:
               - alertname = down
               - severity =~ "warning|critical"
+          # - receiver: "discord"
+          #   matchers:
+          #     - alertname = down
+          #     - severity =~ "warning|critical"
       receivers:
-        - name: discord
-          discord_configs:
-            - webhook_url: https://discordapp.com/api/webhooks/1163728933942997022/aSSYAPj544bpTA5vxv8ebTKWoFLTwKxfmzVGfO47ZATp_quGvXr9JHPLTT9C8mbz6a3t
+        - name: "mail"
+          email_configs:
+            - to: "maxgoeb@gmx.de"
+              # to: 'user1@example.com, user2@example.com'
+              send_resolved: true
+        # - name: "discord"
+        #   discord_configs:
+        #     - webhook_url: "https://discordapp.com/api/webhooks/1163728933942997022/aSSYAPj544bpTA5vxv8ebTKWoFLTwKxfmzVGfO47ZATp_quGvXr9JHPLTT9C8mbz6a3t"
 
   grafana:
     enabled: true
@@ -96,6 +113,8 @@ kube-prometheus-stack:
     adminPassword: admin
     ingress:
       enabled: false
+    nodeSelector:
+      location: 06-Fulda-Steinauer-Str
     sidecar:
       dashboards:
         enabled: true
