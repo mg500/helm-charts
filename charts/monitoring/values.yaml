@@ -67,29 +67,29 @@ kube-prometheus-stack:
       # Temp
       logLevel: debug
       # Temp
-      alertmanagerConfigNamespaceSelector: {}
-      alertmanagerConfigSelector:
-        matchLabels:
-          resource: prometheus
-    config:
-      route:
-        group_by: ["namespace"]
-        group_wait: 0s
-        group_interval: 0s
-        repeat_interval: 1m
-        receiver: "default_receiver"
-        routes:
-          - receiver: "discord"
-            matchers:
-              - alertname = Fire
-              #- group = "critical"
-      receivers:
-        - name: "default_receiver"
-          discord_configs:
-            - webhook_url: "https://disasdasdcordap.com/api/webhooks/1163728933942997022/aSSYAPj544bpTA5vxv8ebTKWoFLTwKxfmzVGfO47ZATp_quGvXr9JHPLTT9C8mbz6a3t"
-        - name: "discord"
-          discord_configs:
-            - webhook_url: "https://discordapp.com/api/webhooks/1163728933942997022/aSSYAPj544bpTA5vxv8ebTKWoFLTwKxfmzVGfO47ZATp_quGvXr9JHPLTT9C8mbz6a3t"
+      # alertmanagerConfigNamespaceSelector: {}
+      # alertmanagerConfigSelector:
+      #   matchLabels:
+      #     resource: prometheus
+    # config:
+    #   route:
+    #     group_by: ["namespace"]
+    #     group_wait: 0s
+    #     group_interval: 0s
+    #     repeat_interval: 1m
+    #     receiver: "default_receiver"
+    #     routes:
+    #       - receiver: "discord"
+    #         matchers:
+    #           - alertname = Fire
+    #           #- group = "critical"
+    #   receivers:
+    #     - name: "default_receiver"
+    #       discord_configs:
+    #         - webhook_url: "https://disasdasdcordap.com/api/webhooks/1163728933942997022/aSSYAPj544bpTA5vxv8ebTKWoFLTwKxfmzVGfO47ZATp_quGvXr9JHPLTT9C8mbz6a3t"
+    #     - name: "discord"
+    #       discord_configs:
+    #         - webhook_url: "https://discordapp.com/api/webhooks/1163728933942997022/aSSYAPj544bpTA5vxv8ebTKWoFLTwKxfmzVGfO47ZATp_quGvXr9JHPLTT9C8mbz6a3t"
 
     # config:
     #   global:
