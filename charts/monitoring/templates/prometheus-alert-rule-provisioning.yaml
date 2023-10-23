@@ -1,0 +1,17 @@
+{{- if $.Values.alertmanagerProvisioning.enabled | default "false" }}
+{{- $alertDirectory := $.Values.alertmanagerProvisioning.directory | default "alerts" }}
+{{- $searchPath := $.Files.Glob (printf "%s/*.yaml" $alertDirectory) }}
+{{- range $alertGroupPath, $_ := $searchPath }}
+{{- $alertGroupName := base $alertGroupPath | trimSuffix ".yaml" }}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name:  {{ lower $alertGroupName }}
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    release: monitoring
+spec:
+  {{- $.Files.Get $alertGroupPath | nindent 2 }}
+---
+{{- end }}
+{{- end }}

@@ -1,0 +1,10 @@
+groups:
+  - name: TestRules
+    rules:
+      - alert: IsItDown
+        expr: up == 0
+        for: 0m
+        labels:
+          group: warning
+        annotations:
+          summary: prometheus-rules-example

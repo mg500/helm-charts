@@ -5,32 +5,124 @@ grafanaProvisioning:
     label: grafana_dashboard
     labelValue: "1"
     directory: dashboards
-    # Set the folder in which the dashboards will be stored ("General" is not possible)
+    ## Set the folder in which the dashboards will be stored ("General" is not possible)
     grafanaDefaultFolder: Custom
-    # Transfer the folder structure from your directory to grafana
-    # grafanaDefaultFolder does not matter in this case
+    ## Transfer the folder structure from your directory to grafana
+    ## grafanaDefaultFolder does not matter in this case
     transferFolderStructure: true
 
-  
-  # alerts:
-  #   enabled: true
+alertmanagerProvisioning:
+  enabled: true
+  directory: alerts
 
   #   users:
   #   - id: mg123456
   #     email: max@mail.de
-    
+
   #   alerts:
   #   - name: test-alert
   #     owner: mg123456
   #     enabled: true
 
-
 kube-prometheus-stack:
+  ## Create default rules for monitoring the cluster
+  ##
+  defaultRules:
+    create: false
+    rules:
+      alertmanager: true
+      etcd: true
+      configReloaders: true
+      general: true
+      k8s: true
+      kubeApiserverAvailability: true
+      kubeApiserverBurnrate: true
+      kubeApiserverHistogram: true
+      kubeApiserverSlos: true
+      kubeControllerManager: true
+      kubelet: true
+      kubeProxy: true
+      kubePrometheusGeneral: true
+      kubePrometheusNodeRecording: true
+      kubernetesApps: true
+      kubernetesResources: true
+      kubernetesStorage: true
+      kubernetesSystem: true
+      kubeSchedulerAlerting: true
+      kubeSchedulerRecording: true
+      kubeStateMetrics: true
+      network: true
+      node: true
+      nodeExporterAlerting: true
+      nodeExporterRecording: true
+      prometheus: true
+      prometheusOperator: true
+      windows: true
 
   alertmanager:
     enabled: true
     ingress:
       enabled: false
+    alertmanagerSpec:
+      # Temp
+      logLevel: debug
+      # Temp
+      # alertmanagerConfigNamespaceSelector: {}
+      # alertmanagerConfigSelector:
+      #   matchLabels:
+      #     resource: prometheus
+    # config:
+    #   route:
+    #     group_by: ["namespace"]
+    #     group_wait: 0s
+    #     group_interval: 0s
+    #     repeat_interval: 1m
+    #     receiver: "default_receiver"
+    #     routes:
+    #       - receiver: "discord"
+    #         matchers:
+    #           - alertname = Fire
+    #           #- group = "critical"
+    #   receivers:
+    #     - name: "default_receiver"
+    #       discord_configs:
+    #         - webhook_url: "https://disasdasdcordap.com/api/webhooks/1163728933942997022/aSSYAPj544bpTA5vxv8ebTKWoFLTwKxfmzVGfO47ZATp_quGvXr9JHPLTT9C8mbz6a3t"
+    #     - name: "discord"
+    #       discord_configs:
+    #         - webhook_url: "https://discordapp.com/api/webhooks/1163728933942997022/aSSYAPj544bpTA5vxv8ebTKWoFLTwKxfmzVGfO47ZATp_quGvXr9JHPLTT9C8mbz6a3t"
+
+    # config:
+    #   global:
+    #     smarthost: "mail.gmx.net:587"
+    #     hello: "mail.gmx.net"
+    #     from: "alerting-kubernetes@gmx.de"
+    #     auth_username: "alerting-kubernetes@gmx.de"
+    #     auth_password: "##sichabc123"
+    #     require_tls: true
+    #   route:
+    #     group_by: ["namespace"]
+    #     group_wait: 0s
+    #     group_interval: 2m
+    #     repeat_interval: 12h
+    #     receiver: "discord"
+    #     routes:
+    #       - receiver: "mail"
+    #         matchers:
+    #           - alertname = down
+    #           - severity =~ "warning|critical"
+    #       # - receiver: "discord"
+    #       #   matchers:
+    #       #     - alertname = down
+    #       #     - severity =~ "warning|critical"
+    #   receivers:
+    #     - name: "mail"
+    #       email_configs:
+    #         - to: "maxgoeb@gmx.de"
+    #           # to: 'user1@example.com, user2@example.com'
+    #           send_resolved: true
+    #     # - name: "discord"
+    #     #   discord_configs:
+    #     #     - webhook_url: "https://discordapp.com/api/webhooks/1163728933942997022/aSSYAPj544bpTA5vxv8ebTKWoFLTwKxfmzVGfO47ZATp_quGvXr9JHPLTT9C8mbz6a3t"
 
   grafana:
     enabled: true
@@ -49,105 +141,52 @@ kube-prometheus-stack:
           allowUiUpdates: false
           foldersFromFilesStructure: true
         folderAnnotation: grafana_dashboard_folder
-          
+      # datasources:
+      #   alertmanager:
+      #     enabled: true
+      #     uid: alertmanager
+      #     handleGrafanaManagedAlerts: false
+      #     implementation: prometheus
 
   prometheusOperator:
     enabled: true
-    # namespaces: {}
-    # # releaseNamespace: true
-    # # additional:
-    # # - kube-system
-
-    # ## Namespaces not to scope the interaction of the Prometheus Operator (deny list).
-    # ##
-    # denyNamespaces: []
-
-    # ## Filter namespaces to look for prometheus-operator custom resources
-    # ##
-    # alertmanagerInstanceNamespaces: []
-    # alertmanagerConfigNamespaces: []
-    # prometheusInstanceNamespaces: []
-    # thanosRulerInstanceNamespaces: []
 
   prometheus:
     enabled: true
     prometheusSpec:
+      ruleSelector:
+        matchLabels:
+          release: monitoring
       serviceMonitorSelectorNilUsesHelmValues: false
-
-      # DEFAULT #
-      # serviceMonitorSelector:
-      #   matchLabels:
-      #     release: monitoring
-
-
+      serviceMonitorSelector:
+        matchLabels:
+          release: monitoring
       serviceMonitorNamespaceSelector: {}
-      # serviceMonitorNamespaceSelector:
-      #  matchLabels:
-      #    name: argocd
-
-
-
-
-
-
-
-
-      # serviceMonitorSelectorNilUsesHelmValues: false
-      # ## Namespaces to be selected for ServiceMonitor discovery.
-      # ##
-      # serviceMonitorNamespaceSelector: {}
-      # ## Example which selects ServiceMonitors in namespaces with label "prometheus" set to "somelabel"
-      # # serviceMonitorNamespaceSelector:
-      # #   matchLabels:
-      # #     prometheus: somelabel
-      # serviceMonitorNamespaceSelector:
-      #   matchLabels:
-      #     argocd: "true"
-
-      # serviceMonitorNamespaceSelector: {}
-        # matchLabels:
-        #   prometheus: somelabel
-
-      # serviceMonitorSelector: {}
-      ## Example which selects ServiceMonitors with label "prometheus" set to "somelabel"
-      # serviceMonitorSelector:
-      #   matchLabels:
-      #     prometheus: somelabel
-
-
       additionalScrapeConfigs:
-      - job_name: 'fritzbox_exporter_fd'
-        static_configs:
-        - targets: ['10.10.10.100:10120']
-
-    #   additionalScrapeConfigsSecret: 
-    #     enabled: true
-    #     name: additional-scrape-configs
-    #     key: prometheus-additional.yaml
-
-
+        - job_name: "fritzbox_exporter_fd"
+          static_configs:
+            - targets: ["10.10.10.100:10120"]
 
   thanosRuler:
     enabled: false
 
-
-  # Scraping
+  ## Scraping
 
   kubeApiServer:
     enabled: true
- 
+
   kubelet:
     enabled: true
-    
+
   kubeControllerManager:
     enabled: true
 
   coreDns:
     enabled: true
-  
+
   kubeDns:
     enabled: false
-    
+
   kubeEtcd:
     enabled: true
 
@@ -162,8 +201,3 @@ kube-prometheus-stack:
 
   nodeExporter:
     enabled: true
-    operatingSystems:
-      linux:
-        enabled: true
-      darwin:
-        enabled: false

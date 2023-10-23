@@ -4,6 +4,7 @@ metadata:
   name: api-deplyoment
   labels:
     app: api
+    serviceMonitor: selector
 spec:
   selector:
     matchLabels:
@@ -25,12 +26,13 @@ kind: Service
 metadata:
   name: api-service
   labels:
-    job: node-api
     app: api
+    serviceMonitor: selector
 spec:
   type: ClusterIP
   selector:
-    app: api
+    # app: api
+    serviceMonitor: selector
   ports:
     - name: web
       protocol: TCP
@@ -45,11 +47,11 @@ metadata:
     release: monitoring
     app: api
 spec:
-  jobLabel: job
   endpoints:
     - interval: 30s
       port: web
       path: /swagger-stats/metrics
   selector:
     matchLabels:
-      app: api
+      # app: api
+      serviceMonitor: selector
