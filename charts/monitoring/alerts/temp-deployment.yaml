@@ -1,0 +1,33 @@
+groups:
+  - name: TempDeployment
+    rules:
+      - alert: ArgoAppMissing
+        expr: |
+          absent(argocd_app_info{name="monitoring"}) == 1
+        for: 15m
+        labels:
+          severity: critical
+        annotations:
+          summary: "ArgoCD Monitoring application: no reported data"
+          description: >
+            Argo CD has not reported any applications data for the past 15 minutes.
+      - alert: ArgoAppNotSynced
+        expr: |
+          argocd_app_info{name="monitoring", sync_status!="Synced"} == 1
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          summary: "ArgoCD Monitoring application: not synchronized"
+          description: >
+            The application Monitoring has not been synchronized for over 1 hour.
+      - alert: ArgoAppNotHealthy
+        expr: |
+          argocd_app_info{name="monitoring", health_status!="Healthy"} == 1
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          summary: "ArgoCD Monitoring application: not healthy"
+          description: >
+            The application Monitoring has not been healthy for over 1 hour.
