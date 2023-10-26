@@ -1,10 +1,10 @@
 groups:
   - name: MonitoringDeployment
     rules:
-      - alert: ArgoAppMissing
+      - alert: MonitoringArgoAppMissing
         expr: |
           absent(argocd_app_info{name="monitoring"}) == 1
-        for: 15m
+        for: 10s
         labels:
           severity: critical
         annotations:

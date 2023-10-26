@@ -64,65 +64,45 @@ kube-prometheus-stack:
     ingress:
       enabled: false
     alertmanagerSpec:
-      # Temp
       logLevel: debug
-      # Temp
-      # alertmanagerConfigNamespaceSelector: {}
-      # alertmanagerConfigSelector:
-      #   matchLabels:
-      #     resource: prometheus
-    # config:
-    #   route:
-    #     group_by: ["namespace"]
-    #     group_wait: 0s
-    #     group_interval: 0s
-    #     repeat_interval: 1m
-    #     receiver: "default_receiver"
-    #     routes:
-    #       - receiver: "discord"
-    #         matchers:
-    #           - alertname = Fire
-    #           #- group = "critical"
-    #   receivers:
-    #     - name: "default_receiver"
-    #       discord_configs:
-    #         - webhook_url: "https://disasdasdcordap.com/api/webhooks/1163728933942997022/aSSYAPj544bpTA5vxv8ebTKWoFLTwKxfmzVGfO47ZATp_quGvXr9JHPLTT9C8mbz6a3t"
-    #     - name: "discord"
-    #       discord_configs:
-    #         - webhook_url: "https://discordapp.com/api/webhooks/1163728933942997022/aSSYAPj544bpTA5vxv8ebTKWoFLTwKxfmzVGfO47ZATp_quGvXr9JHPLTT9C8mbz6a3t"
-
-    # config:
-    #   global:
-    #     smarthost: "mail.gmx.net:587"
-    #     hello: "mail.gmx.net"
-    #     from: "alerting-kubernetes@gmx.de"
-    #     auth_username: "alerting-kubernetes@gmx.de"
-    #     auth_password: "##sichabc123"
-    #     require_tls: true
-    #   route:
-    #     group_by: ["namespace"]
-    #     group_wait: 0s
-    #     group_interval: 2m
-    #     repeat_interval: 12h
-    #     receiver: "discord"
-    #     routes:
-    #       - receiver: "mail"
-    #         matchers:
-    #           - alertname = down
-    #           - severity =~ "warning|critical"
-    #       # - receiver: "discord"
-    #       #   matchers:
-    #       #     - alertname = down
-    #       #     - severity =~ "warning|critical"
-    #   receivers:
-    #     - name: "mail"
-    #       email_configs:
-    #         - to: "maxgoeb@gmx.de"
-    #           # to: 'user1@example.com, user2@example.com'
-    #           send_resolved: true
-    #     # - name: "discord"
-    #     #   discord_configs:
-    #     #     - webhook_url: "https://discordapp.com/api/webhooks/1163728933942997022/aSSYAPj544bpTA5vxv8ebTKWoFLTwKxfmzVGfO47ZATp_quGvXr9JHPLTT9C8mbz6a3t"
+      alertmanagerConfigNamespaceSelector: {}
+      alertmanagerConfigSelector:
+        matchLabels:
+          resource: prometheus
+    config:
+      route:
+        group_by: ["namespace"]
+        group_wait: 10s
+        group_interval: 10s
+        repeat_interval: 10s
+        receiver: "null"
+        routes:
+          - receiver: "mail"
+            continue: true
+            matchers:
+              #- alertname = Fire
+              - severity = "critical"
+          - receiver: "discord"
+            continue: true
+            matchers:
+              #- alertname = Fire
+              - severity = "warning"
+      receivers:
+        - name: "null"
+        - name: "discord"
+          discord_configs:
+            - webhook_url: "https://discordapp.com/api/webhooks/1163728933942997022/aSSYAPj544bpTA5vxv8ebTKWoFLTwKxfmzVGfO47ZATp_quGvXr9JHPLTT9C8mbz6a3t"
+        - name: "mail"
+          email_configs:
+            - to: "maxgoeb@gmx.de"
+              # to: 'user1@example.com, user2@example.com'
+              send_resolved: true
+              smarthost: "mail.gmx.net:587"
+              hello: "mail.gmx.net"
+              from: "alerting-kubernetes@gmx.de"
+              auth_username: "alerting-kubernetes@gmx.de"
+              auth_password: "##sichabc123"
+              require_tls: true
 
   grafana:
     enabled: true

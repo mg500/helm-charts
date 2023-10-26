@@ -18,7 +18,5 @@
 #           - severity =~ "warning|critical"
 #   receivers:
 #     - name: discord
-#       discordConfigs:
-#         - apiURL: "https://discordapp.com/api/webhooks/1163728933942997022/aSSYAPj544bpTA5vxv8ebTKWoFLTwKxfmzVGfO47ZATp_quGvXr9JHPLTT9C8mbz6a3t"
-
-# https://github.dev/prometheus-operator/prometheus-operator
+#       # discordConfigs:
+#       #   - apiURL: "https://discordapp.com/api/webhooks/1163728933942997022/aSSYAPj544bpTA5vxv8ebTKWoFLTwKxfmzVGfO47ZATp_quGvXr9JHPLTT9C8mbz6a3t"
