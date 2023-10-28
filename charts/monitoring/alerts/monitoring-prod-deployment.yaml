@@ -6,6 +6,7 @@ groups:
           absent(argocd_app_info{name="monitoring"}) == 1
         for: 10s
         labels:
+          namespace: monitoring
           severity: critical
         annotations:
           summary: "ArgoCD Monitoring application: no reported data"
