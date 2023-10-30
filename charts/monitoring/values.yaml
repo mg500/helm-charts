@@ -15,14 +15,14 @@ alertmanagerProvisioning:
   enabled: true
   directory: alerts
 
-  #   users:
-  #   - id: mg123456
-  #     email: max@mail.de
+alertmanagerConfig:
+  enabled: true
+  name: alertmanager-config
 
-  #   alerts:
-  #   - name: test-alert
-  #     owner: mg123456
-  #     enabled: true
+  mailGroups:
+    - name: test
+      to: 
+      matchers:
 
 kube-prometheus-stack:
   ## Create default rules for monitoring the cluster
@@ -72,6 +72,21 @@ kube-prometheus-stack:
       ## Ggf wieder ändern
       alertmanagerConfiguration:
         name: alertmanager-config
+        global:
+          smtp:
+            authIdentity: "alerting-kubernetes@gmx.de"
+            authPassword:
+              name: alertmanager-mail
+              key: password
+            authSecret:
+            authUsername: "alerting-kubernetes@gmx.de"
+            from: "alerting-kubernetes@gmx.de"
+            hello: "mail.gmx.net"
+            requireTLS:
+            smartHost: 
+              host: "mail.gmx.net"
+              port: "587"
+
 
     # config:
     #   route:

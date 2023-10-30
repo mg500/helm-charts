@@ -22,7 +22,7 @@ spec:
           - matchType: "="
             name: severity
             value: warning
-        receiver: "default_channel"
+        receiver: "mail"
         continue: true
   receivers:
     - name: "default_channel"
@@ -31,20 +31,15 @@ spec:
         - apiURL:
             name: alertmanager-discord
             key: webhook
-    - name: "mail-1"
+    - name: "mail"
       emailConfigs:
         - to: 'maxgoeb@gmx.de'
-          from: "alerting-kubernetes@gmx.de"
-          smarthost: "mail.gmx.net:587"
-          hello: "mail.gmx.net"
-          authUsername: "alerting-kubernetes@gmx.de"
-          authPassword:
-            name: alertmanager-mail
-            key: password
-          authIdentity: "alerting-kubernetes@gmx.de"
     - name: "mail-2"
       emailConfigs:
         - to: 'maxgoeb@gmx.de, user2.0@gmx.de'
+    - name: "mail-old"
+      emailConfigs:
+        - to: 'maxgoeb@gmx.de'
           from: "alerting-kubernetes@gmx.de"
           smarthost: "mail.gmx.net:587"
           hello: "mail.gmx.net"
