@@ -8,6 +8,7 @@ groups:
         labels:
           namespace: monitoring
           severity: warning
+          temp: temp
         annotations:
           summary: "ArgoCD Monitoring application: no reported data"
           description: >

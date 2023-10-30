@@ -20,9 +20,18 @@ alertmanagerConfig:
   name: alertmanager-config
 
   mailGroups:
-    - name: test
-      to: 
+    - name: mail-1
+      to: "maxgoeb@gmx.de"
       matchers:
+        - matchType: "="
+          name: severity
+          value: criticalAA
+    - name: mail-2
+      to: "maxgoeb@gmx.de, user2.0@gmx.de"
+      matchers:
+        - matchType: "="
+          name: severity
+          value: warningAA
 
 kube-prometheus-stack:
   ## Create default rules for monitoring the cluster
@@ -74,13 +83,13 @@ kube-prometheus-stack:
         name: alertmanager-config
         global:
           smtp:
-            authIdentity: "alerting-kubernetes@gmx.de"
+            authIdentity: "123@gmx.de"
             authPassword:
               name: alertmanager-mail
               key: password
             authSecret:
-            authUsername: "alerting-kubernetes@gmx.de"
-            from: "alerting-kubernetes@gmx.de"
+            authUsername: "123@gmx.de"
+            from: "123@gmx.de"
             hello: "mail.gmx.net"
             requireTLS:
             smartHost: 

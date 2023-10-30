@@ -1,0 +1,56 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: alertmanager-config
+  labels:
+    resource: prometheus
+spec:
+  route:
+    groupBy: ["..."]
+    groupWait: 10s
+    groupInterval: 10s
+    repeatInterval: 90s
+    receiver: "default_channel"
+    routes:
+      # - matchers:
+      #     - matchType: "="
+      #       name: severity
+      #       value: critical
+      #   receiver: "discord"
+      #   continue: true
+      # - matchers:
+      #     - matchType: "="
+      #       name: severity
+      #       value: warning
+      #   receiver: "mail"
+      #   continue: true
+  receivers:
+    - name: "default_channel"
+    # - name: "mail"
+    #   emailConfigs:
+    #     - to: 'maxgoeb@gmx.de'
+    # - name: "mail-2"
+    #   emailConfigs:
+    #     - to: 'maxgoeb@gmx.de, user2.0@gmx.de'
+    # - name: "discord"
+    #   discordConfigs:
+    #     - apiURL:
+    #         name: alertmanager-discord
+    #         key: webhook
+    # - name: "mail-old"
+    #   emailConfigs:
+    #     - to: 'maxgoeb@gmx.de'
+    #       from: "alerting-kubernetes@gmx.de"
+    #       smarthost: "mail.gmx.net:587"
+    #       hello: "mail.gmx.net"
+    #       authUsername: "alerting-kubernetes@gmx.de"
+    #       authPassword:
+    #         name: alertmanager-mail
+    #         key: password
+    #       authIdentity: "alerting-kubernetes@gmx.de"
+
+# https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/alerting.md
+# https://prometheus-operator.dev/docs/user-guides/alerting/#managing-alertmanager-configuration
+# https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/main/bundle.yaml
+# https://prometheus.io/docs/alerting/latest/configuration/
+# https://github.com/prometheus-operator/prometheus-operator/issues/3756

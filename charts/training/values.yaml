@@ -15,6 +15,21 @@ alertmanagerProvisioning:
   enabled: true
   directory: alerts
 
-  # users:
-  #   - id: mg123456
-  #     Email: mg@mail.de
+
+alertmanagerConfig:
+  enabled: true
+  name: alertmanager-config
+
+  mailGroups:
+    - name: test-1
+      to: "test-1@gmx.de"
+      matchers:
+        - matchType: "="
+          name: severity
+          value: critical
+    - name: test-2
+      to: "test-2@gmx.de"
+      matchers:
+        - matchType: "="
+          name: severity
+          value: warning
