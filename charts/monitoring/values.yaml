@@ -25,9 +25,6 @@ alertmanagerConfig:
       matchers:
         - matchType: "="
           name: severity
-          value: critical
-        - matchType: "="
-          name: severity
           value: warning
 
 kube-prometheus-stack:
