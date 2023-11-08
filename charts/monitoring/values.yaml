@@ -135,11 +135,6 @@ kube-prometheus-stack:
       - job_name: "fritzbox_exporter_fd_temp"
         static_configs:
           - targets: ["10.10.10.100:10120"]
-      - job_name: 'jenkins_job_temp'
-        scheme: https
-        metrics_path: /jenkins/prometheus
-        static_configs:
-          - targets: ['csp.edag.de']
 
   thanosRuler:
     enabled: false
