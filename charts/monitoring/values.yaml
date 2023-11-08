@@ -27,6 +27,14 @@ alertmanagerConfig:
           name: severity
           value: warning
 
+  discordGroups:
+    - name: discord-1
+      matchers:
+        - matchType: "="
+          name: severity
+          value: warning
+
+
 kube-prometheus-stack:
   ## Create default rules for monitoring the cluster
   ##

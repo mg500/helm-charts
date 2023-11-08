@@ -23,6 +23,12 @@ spec:
         receiver: {{ quote $mailGroup.name }}
         continue: true
 {{- end }}
+      - matchers:
+          - matchType: "="
+            name: severity
+            value: warning
+        receiver: "discord"
+        continue: true
   receivers:
     - name: "default_channel"
 {{- range $mailGroup := .Values.alertmanagerConfig.mailGroups }}
@@ -30,4 +36,9 @@ spec:
       emailConfigs:
         - to: {{ quote $mailGroup.to }}
 {{- end }}
+    - name: "discord"
+      discordConfigs:
+        - apiURL:
+            name: alertmanager-discord
+            key: webhook
 {{- end }}
