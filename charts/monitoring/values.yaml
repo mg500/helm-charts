@@ -29,6 +29,8 @@ alertmanagerConfig:
 
   discordGroups:
     - name: discord-1
+      secretName: alertmanager-discord
+      secretKey: webhook
       matchers:
         - matchType: "="
           name: severity
