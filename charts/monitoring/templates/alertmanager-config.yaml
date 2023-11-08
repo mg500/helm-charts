@@ -1,0 +1,33 @@
+{{- if .Values.alertmanagerConfig.enabled | default "false" }}
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: {{ $.Values.alertmanagerConfig.name }}
+  labels:
+    resource: prometheus
+spec:
+  route:
+    groupBy: ["..."]
+    groupWait: 1m
+    groupInterval: 1m
+    repeatInterval: 1m
+    receiver: "default_channel"
+    routes:
+{{- range $mailGroup := .Values.alertmanagerConfig.mailGroups }}
+      - matchers:
+{{- range $matchers := $mailGroup.matchers }}
+        - matchType: {{ quote $matchers.matchType }}
+          name: {{ $matchers.name }}
+          value: {{ $matchers.value }}
+{{- end }}
+        receiver: {{ quote $mailGroup.name }}
+        continue: true
+{{- end }}
+  receivers:
+    - name: "default_channel"
+{{- range $mailGroup := .Values.alertmanagerConfig.mailGroups }}
+    - name: {{ $mailGroup.name }}
+      emailConfigs:
+        - to: {{ quote $mailGroup.to }}
+{{- end }}
+{{- end }}

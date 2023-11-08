@@ -1,12 +1,14 @@
 groups:
   - name: TempDeployment
     rules:
-      - alert: ArgoAppMissing
+      - alert: TempArgoAppMissing
         expr: |
           absent(argocd_app_info{name="monitoring"}) == 1
-        for: 15m
+        for: 10s
         labels:
-          severity: critical
+          namespace: monitoring
+          severity: warning
+          temp: temp
         annotations:
           summary: "ArgoCD Monitoring application: no reported data"
           description: >
