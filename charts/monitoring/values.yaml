@@ -25,13 +25,7 @@ alertmanagerConfig:
       matchers:
         - matchType: "="
           name: severity
-          value: criticalAA
-    - name: mail-2
-      to: "maxgoeb@gmx.de, user2.0@gmx.de"
-      matchers:
-        - matchType: "="
-          name: severity
-          value: warningAA
+          value: critical
 
 kube-prometheus-stack:
   ## Create default rules for monitoring the cluster
@@ -83,54 +77,15 @@ kube-prometheus-stack:
         name: alertmanager-config
         global:
           smtp:
-            authIdentity: "123@gmx.de"
             authPassword:
               name: alertmanager-mail
               key: password
-            authSecret:
-            authUsername: "123@gmx.de"
-            from: "123@gmx.de"
+            authUsername: "alerting-kubernetes@gmx.de"
+            from: "alerting-kubernetes@gmx.de"
             hello: "mail.gmx.net"
-            requireTLS:
             smartHost: 
               host: "mail.gmx.net"
               port: "587"
-
-
-    # config:
-    #   route:
-    #     group_by: ["namespace"]
-    #     group_wait: 10s
-    #     group_interval: 10s
-    #     repeat_interval: 30s
-    #     receiver: "null"
-    #     routes:
-    #       - receiver: "discord"
-    #         continue: true
-    #         matchers:
-    #           #- alertname = Fire
-    #           - severity = "warning"
-    #       - receiver: "mail"
-    #         continue: true
-    #         matchers:
-    #           #- alertname = Fire
-    #           - severity = "critical"
-    #   receivers:
-    #     - name: "null"
-    #     - name: "discord"
-    #       discord_configs:
-    #         - webhook_url: "https://discordapp.com/api/webhooks/1163728933942997022/aSSYAPj544bpTA5vxv8ebTKWoFLTwKxfmzVGfO47ZATp_quGvXr9JHPLTT9C8mbz6a3t"
-    #     - name: "mail"
-    #       email_configs:
-    #         - to: "maxgoeb@gmx.de"
-    #           # to: 'user1@example.com, user2@example.com'
-    #           send_resolved: true
-    #           smarthost: "mail.gmx.net:587"
-    #           hello: "mail.gmx.net"
-    #           from: "alerting-kubernetes@gmx.de"
-    #           auth_username: "alerting-kubernetes@gmx.de"
-    #           auth_password: "##sichabc123"
-    #           require_tls: true
 
   grafana:
     enabled: true
@@ -170,10 +125,21 @@ kube-prometheus-stack:
         matchLabels:
           release: monitoring
       serviceMonitorNamespaceSelector: {}
+      # scrapeConfigSelectorNilUsesHelmValues: false
+      # scrapeConfigSelector:
+      #   matchLabels:
+      #       release: monitoring
+      # scrapeConfigNamespaceSelector: {}
+
       additionalScrapeConfigs:
-        - job_name: "fritzbox_exporter_fd"
-          static_configs:
-            - targets: ["10.10.10.100:10120"]
+      - job_name: "fritzbox_exporter_fd_temp"
+        static_configs:
+          - targets: ["10.10.10.100:10120"]
+      - job_name: 'jenkins_job_temp'
+        scheme: https
+        metrics_path: /jenkins/prometheus
+        static_configs:
+          - targets: ['csp.edag.de']
 
   thanosRuler:
     enabled: false

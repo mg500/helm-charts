@@ -8,9 +8,9 @@ metadata:
 spec:
   route:
     groupBy: ["..."]
-    groupWait: 10s
-    groupInterval: 10s
-    repeatInterval: 90s
+    groupWait: 1m
+    groupInterval: 1m
+    repeatInterval: 1m
     receiver: "default_channel"
     routes:
 {{- range $mailGroup := .Values.alertmanagerConfig.mailGroups }}

@@ -1,7 +1,7 @@
 groups:
   - name: MonitoringDeployment
     rules:
-      - alert: MonitoringArgoAppMissing
+      - alert: MonitoringArgoAppMissing-Monitoring
         expr: |
           absent(argocd_app_info{name="monitoring"}) == 1
         for: 10s
@@ -12,7 +12,7 @@ groups:
           summary: "ArgoCD Monitoring application: no reported data"
           description: >
             Argo CD has not reported any applications data for the past 15 minutes.
-      - alert: ArgoAppNotSynced
+      - alert: ArgoAppNotSynced-Monitoring
         expr: |
           argocd_app_info{name="monitoring", sync_status!="Synced"} == 1
         for: 1h
@@ -22,7 +22,7 @@ groups:
           summary: "ArgoCD Monitoring application: not synchronized"
           description: >
             The application Monitoring has not been synchronized for over 1 hour.
-      - alert: ArgoAppNotHealthy
+      - alert: ArgoAppNotHealthy-Monitoring
         expr: |
           argocd_app_info{name="monitoring", health_status!="Healthy"} == 1
         for: 1h
