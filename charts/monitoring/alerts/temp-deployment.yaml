@@ -3,7 +3,7 @@ groups:
     rules:
       - alert: TempArgoAppMissing
         expr: |
-          absent(argocd_app_info{name="monitoring"}) == 1
+          absent(argocd_app_info{name="temp"}) == 1
         for: 10s
         labels:
           namespace: monitoring
@@ -15,7 +15,7 @@ groups:
             Argo CD has not reported any applications data for the past 15 minutes.
       - alert: ArgoAppNotSynced
         expr: |
-          argocd_app_info{name="monitoring", sync_status!="Synced"} == 1
+          argocd_app_info{name="temp", sync_status!="Synced"} == 1
         for: 1h
         labels:
           severity: warning
@@ -25,7 +25,7 @@ groups:
             The application Monitoring has not been synchronized for over 1 hour.
       - alert: ArgoAppNotHealthy
         expr: |
-          argocd_app_info{name="monitoring", health_status!="Healthy"} == 1
+          argocd_app_info{name="temp", health_status!="Healthy"} == 1
         for: 1h
         labels:
           severity: warning
