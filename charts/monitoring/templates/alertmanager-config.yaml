@@ -10,7 +10,7 @@ spec:
     groupBy: ["..."]
     groupWait: 1m
     groupInterval: 1m
-    repeatInterval: 1m
+    repeatInterval: 12h
     receiver: "default_channel"
     routes:
 {{- range $mailGroup := .Values.alertmanagerConfig.mailGroups }}
