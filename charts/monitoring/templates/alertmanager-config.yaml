@@ -13,38 +13,38 @@ spec:
     repeatInterval: 12h
     receiver: "default_channel"
     routes:
-{{- range $mailGroup := .Values.alertmanagerConfig.mailGroups }}
+      {{- range $mailGroup := .Values.alertmanagerConfig.mailGroups }}
       - matchers:
-{{- range $matchers := $mailGroup.matchers }}
+        {{- range $matchers := $mailGroup.matchers }}
         - matchType: {{ quote $matchers.matchType }}
           name: {{ $matchers.name }}
           value: {{ $matchers.value }}
-{{- end }}
+        {{- end }}
         receiver: {{ quote $mailGroup.name }}
         continue: true
-{{- end }}
-{{- range $discordGroup := .Values.alertmanagerConfig.discordGroups }}
+      {{- end }}
+      {{- range $discordGroup := .Values.alertmanagerConfig.discordGroups }}
       - matchers:
-{{- range $matchers := $discordGroup.matchers }}
+        {{- range $matchers := $discordGroup.matchers }}
         - matchType: {{ quote $matchers.matchType }}
           name: {{ $matchers.name }}
           value: {{ $matchers.value }}
-{{- end }}
+        {{- end }}
         receiver: {{ quote $discordGroup.name }}
         continue: true
-{{- end }}
+      {{- end }}
   receivers:
     - name: "default_channel"
-{{- range $mailGroup := .Values.alertmanagerConfig.mailGroups }}
+    {{- range $mailGroup := .Values.alertmanagerConfig.mailGroups }}
     - name: {{ $mailGroup.name }}
       emailConfigs:
         - to: {{ quote $mailGroup.to }}
-{{- end }}
-{{- range $discordGroup := .Values.alertmanagerConfig.discordGroups }}
+    {{- end }}
+    {{- range $discordGroup := .Values.alertmanagerConfig.discordGroups }}
     - name: {{ $discordGroup.name }}
       discordConfigs:
         - apiURL:
             name: alertmanager-discord
             key: webhook
-{{- end }}
+    {{- end }}
 {{- end }}
