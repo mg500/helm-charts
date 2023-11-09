@@ -136,15 +136,15 @@ kube-prometheus-stack:
           release: monitoring
       serviceMonitorNamespaceSelector: {}
       # scrapeConfigSelectorNilUsesHelmValues: false
-      # scrapeConfigSelector:
-      #   matchLabels:
-      #       release: monitoring
-      # scrapeConfigNamespaceSelector: {}
+      scrapeConfigSelector:
+        matchLabels:
+            release: monitoring
+      scrapeConfigNamespaceSelector: {}
 
-      additionalScrapeConfigs:
-      - job_name: "fritzbox_exporter_fd_temp"
-        static_configs:
-          - targets: ["10.10.10.100:10120"]
+      # additionalScrapeConfigs:
+      # - job_name: "fritzbox_exporter_fd_temp"
+      #   static_configs:
+      #     - targets: ["10.10.10.100:10120"]
 
   thanosRuler:
     enabled: false
