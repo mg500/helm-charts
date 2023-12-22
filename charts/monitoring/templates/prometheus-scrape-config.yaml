@@ -11,19 +11,19 @@ spec:
         job: fritzbox-fd
       targets:
         - 10.10.10.100:10120
----
-apiVersion: monitoring.coreos.com/v1alpha1
-kind: ScrapeConfig
-metadata:
-  name: static-config-jenkins
-  namespace: monitoring
-  labels:
-    release: monitoring
-spec:
-  staticConfigs:
-    - labels:
-        job: jenkins
-      targets:
-        - csp.edag.de
-  scheme: HTTPS
-  metricsPath: /jenkins/prometheus
+# ---
+# apiVersion: monitoring.coreos.com/v1alpha1
+# kind: ScrapeConfig
+# metadata:
+#   name: static-config-jenkins
+#   namespace: monitoring
+#   labels:
+#     release: monitoring
+# spec:
+#   staticConfigs:
+#     - labels:
+#         job: jenkins
+#       targets:
+#         - csp.edag.de
+#   scheme: HTTPS
+#   metricsPath: /jenkins/prometheus
