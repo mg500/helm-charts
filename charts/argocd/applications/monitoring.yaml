@@ -58,4 +58,4 @@ spec:
       - CreateNamespace=true
       #- Replace=true
       - ServerSideApply=true
-      #- ApplyOutOfSyncOnly=true
+      - ApplyOutOfSyncOnly=true
