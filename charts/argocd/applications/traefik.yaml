@@ -1,0 +1,49 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: traefik
+  namespace: argocd
+spec:
+  sourceRepos:
+    - 'https://github.com/mg500/helm-charts'
+  destinations:
+    - namespace: 'traefik'
+      server: '*'
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  # namespaceResourceWhitelist:
+  #   - group: '*'
+  #     kind: '*'
+  # clusterResourceBlacklist:
+  #   - group: '*'
+  #     kind: '*'
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik
+  namespace: traefik
+spec:
+  #project: traefik
+  project: default
+  source:
+    repoURL: 'https://github.com/mg500/helm-charts'
+    targetRevision: main
+    path: charts/traefik
+    helm:
+      releaseName: traefik
+      valueFiles:
+        - values.yaml
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: traefik
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      #- Replace=true
+      - ServerSideApply=true
+      - ApplyOutOfSyncOnly=true
